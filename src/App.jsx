@@ -69,18 +69,16 @@ const generateFromPhases = (phases, startPrice, dob) => {
   const now = new Date();
 
   if (!sorted.length) {
-    // Auto-generate estimated life arc from birth to today
     let v = startPrice, d = new Date(birthDate);
     while (d <= now) {
       const age = (d - birthDate) / (365.25 * 86400000);
-      // childhood stable, teen dip, late teen recovery trend
       let trend = 0;
-      if (age < 5)  trend = 0.05;                        // early childhood — steady
-      else if (age < 10) trend = 0.08;                   // primary school — gradual growth
-      else if (age < 13) trend = 0.02;                   // pre-teen — slowing
-      else if (age < 15) trend = -0.05;                  // early teen — common dip
-      else if (age < 17) trend = 0.04;                   // mid teen — recovery
-      else trend = 0.06;                                 // late teen / adult — growth
+      if (age < 5)  trend = 0.05;
+      else if (age < 10) trend = 0.08;
+      else if (age < 13) trend = 0.02;
+      else if (age < 15) trend = -0.05;
+      else if (age < 17) trend = 0.04;
+      else trend = 0.06;
       v = Math.max(10, v + trend + (Math.random() - 0.5) * 2);
       data.push({ date: d.toISOString().split("T")[0], value: parseFloat(v.toFixed(2)), timestamp: d.getTime() });
       d.setDate(d.getDate() + 1);
@@ -88,7 +86,6 @@ const generateFromPhases = (phases, startPrice, dob) => {
     return data;
   }
 
-  // Fill gap from DOB to first phase with estimated data
   const firstPhaseStart = new Date(sorted[0].start);
   if (birthDate < firstPhaseStart) {
     let v = startPrice, d = new Date(birthDate);
@@ -116,12 +113,12 @@ const generateFromPhases = (phases, startPrice, dob) => {
   return data;
 };
 
-// ── dark-only design tokens ───────────────────────────────────────────────────
+// ── BRIGHTER dark tokens ───────────────────────────────────────────────────
 const C = {
-  bg: "bg-[#080808]", card: "bg-[#111111]", border: "border-[#1e1e1e]",
-  text: "text-[#e8e8e8]", muted: "text-[#555]", subtle: "text-[#333]",
-  input: "bg-[#0e0e0e] border-[#1e1e1e]", hover: "hover:bg-[#161616]",
-  pill: "bg-[#161616] border-[#222]",
+  bg: "bg-[#000000]", card: "bg-[#111111]", border: "border-[#333333]",
+  text: "text-[#ffffff]", muted: "text-[#cccccc]", subtle: "text-[#999999]",
+  input: "bg-[#1a1a1a] border-[#333333]", hover: "hover:bg-[#222222]",
+  pill: "bg-[#1a1a1a] border-[#333333]",
 };
 
 const Card = ({ children, className = "" }) => (
@@ -129,32 +126,32 @@ const Card = ({ children, className = "" }) => (
 );
 
 const Input = ({ className = "", ...props }) => (
-  <input className={`${C.input} border rounded-xl px-4 py-2.5 text-[#e8e8e8] placeholder-[#333] focus:outline-none focus:border-[#333] text-sm transition-all ${className}`} {...props} />
+  <input className={`${C.input} border rounded-xl px-4 py-2.5 text-white placeholder-[#666] focus:outline-none focus:border-[#666] text-sm transition-all ${className}`} {...props} />
 );
 
 const Textarea = ({ className = "", ...props }) => (
-  <textarea className={`${C.input} border rounded-xl px-4 py-2.5 text-[#e8e8e8] placeholder-[#333] focus:outline-none focus:border-[#333] text-sm resize-none transition-all ${className}`} {...props} />
+  <textarea className={`${C.input} border rounded-xl px-4 py-2.5 text-white placeholder-[#666] focus:outline-none focus:border-[#666] text-sm resize-none transition-all ${className}`} {...props} />
 );
 
 const Btn = ({ children, variant = "primary", className = "", ...props }) => {
   const variants = {
-    primary: "bg-[#e8e8e8] text-[#080808] hover:bg-[#d0d0d0]",
-    ghost: "bg-[#161616] border border-[#1e1e1e] text-[#888] hover:bg-[#1a1a1a] hover:text-[#e8e8e8]",
-    danger: "bg-[#1a0808] border border-[#3a1010] text-[#f87171] hover:bg-[#200a0a]",
-    success: "bg-[#0a1a12] border border-[#1a4d2e] text-[#34d399] hover:bg-[#0d2018]",
+    primary: "bg-white text-black hover:bg-[#e0e0e0]",
+    ghost: "bg-[#222] border border-[#333] text-[#ccc] hover:bg-[#333] hover:text-white",
+    danger: "bg-[#2a0a0a] border border-[#4a1010] text-[#ff8888] hover:bg-[#3a0a0a]",
+    success: "bg-[#0a2a12] border border-[#1a5d2e] text-[#44e3aa] hover:bg-[#0d3018]",
   };
   return <button className={`px-4 py-2.5 rounded-xl font-medium text-sm transition-all flex items-center justify-center gap-2 ${variants[variant]} ${className}`} {...props}>{children}</button>;
 };
 
-// ── Bento Credits Card ────────────────────────────────────────────────────────
+// ── Bento Credits Card (Brightened) ────────────────────────────────────────────────────────
 const CreditsCard = () => (
-  <div className="bg-[#0a0a0a] border border-[#161616] rounded-3xl p-6 flex flex-col justify-between hover:border-[#222] transition-all group relative overflow-hidden h-40 mb-4">
+  <div className="bg-[#111] border border-[#333] rounded-3xl p-6 flex flex-col justify-between hover:border-[#555] transition-all group relative overflow-hidden h-40 w-full">
     {/* Minimalist Background Detail */}
-    <div className="absolute -right-6 -top-6 w-32 h-32 bg-white/[0.02] blur-3xl rounded-full group-hover:bg-white/[0.05] transition-all" />
+    <div className="absolute -right-6 -top-6 w-32 h-32 bg-white/[0.05] blur-3xl rounded-full group-hover:bg-white/[0.1] transition-all" />
     
     <div className="flex flex-col gap-1 z-10">
-      <p className="text-[10px] text-[#444] uppercase tracking-[0.3em] font-bold">Systems Architect</p>
-      <h3 className="text-xl font-medium text-[#e8e8e8] tracking-tight">Nikshep Doggalli</h3>
+      <p className="text-[10px] text-[#888] uppercase tracking-[0.3em] font-bold">Systems Architect</p>
+      <h3 className="text-xl font-bold text-white tracking-tight">Nikshep Doggalli</h3>
     </div>
 
     <div className="mt-auto flex items-center justify-between z-10">
@@ -162,14 +159,14 @@ const CreditsCard = () => (
         href="https://instagram.com/nikkk.exe" 
         target="_blank" 
         rel="noopener noreferrer"
-        className="flex items-center gap-2.5 text-sm text-[#888] hover:text-white transition-all"
+        className="flex items-center gap-2.5 text-sm text-[#bbb] hover:text-white transition-all"
       >
-        <div className="p-2 bg-[#111] rounded-xl border border-[#1e1e1e] group-hover:border-[#333]">
+        <div className="p-2 bg-[#1a1a1a] rounded-xl border border-[#333] group-hover:border-[#555]">
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
         </div>
         <span className="font-mono tracking-tighter">@nikkk.exe</span>
       </a>
-      <div className="opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all text-[#444]">
+      <div className="opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all text-white">
         <ChevronRight size={18} />
       </div>
     </div>
@@ -186,10 +183,10 @@ const Shell = ({ step, children, onNext, onBack, nextLabel = "Continue", nextDis
         {STEPS.map((_, i) => (
           <div key={i} className="flex items-center">
             <div className={`rounded-full flex items-center justify-center text-[10px] font-bold transition-all
-              ${i < step ? "w-5 h-5 bg-[#e8e8e8] text-[#080808]" : i === step ? "w-6 h-6 border border-[#555] text-[#888]" : "w-4 h-4 border border-[#222] text-[#333]"}`}>
+              ${i < step ? "w-5 h-5 bg-white text-black" : i === step ? "w-6 h-6 border border-[#888] text-white" : "w-4 h-4 border border-[#333] text-[#555]"}`}>
               {i < step ? <Check size={10} /> : i + 1}
             </div>
-            {i < STEPS.length - 1 && <div className={`w-4 h-px mx-1 ${i < step ? "bg-[#555]" : "bg-[#1e1e1e]"}`} />}
+            {i < STEPS.length - 1 && <div className={`w-4 h-px mx-1 ${i < step ? "bg-[#888]" : "bg-[#222]"}`} />}
           </div>
         ))}
       </div>
@@ -220,30 +217,32 @@ const Onboarding = ({ onComplete }) => {
   if (step === 0) return (
     <Shell step={0} onNext={n} nextLabel="Begin">
       <div className="text-center">
-        <div className="w-16 h-16 bg-[#161616] border border-[#222] rounded-2xl flex items-center justify-center mx-auto mb-6 text-3xl">📈</div>
-        <h1 className="text-3xl font-semibold text-[#e8e8e8] mb-3 tracking-tight">EntropyZero</h1>
-        <p className="text-[#555] text-sm leading-relaxed mb-8">Your life, quantified like a stock market. Track every phase, habit, skill and emotion — watch your personal index grow.</p>
-        <div className="grid grid-cols-3 gap-3">
+        <div className="w-16 h-16 bg-[#1a1a1a] border border-[#333] rounded-2xl flex items-center justify-center mx-auto mb-6 text-3xl">📈</div>
+        <h1 className="text-3xl font-bold text-white mb-3 tracking-tight">EntropyZero</h1>
+        <p className="text-[#bbb] text-sm leading-relaxed mb-8">Your life, quantified like a stock market. Track every phase, habit, skill and emotion — watch your personal index grow.</p>
+        <div className="grid grid-cols-3 gap-3 mb-6">
           {[["📊","Index Chart"],["🧠","AI Coach"],["💎","Assets"]].map(([e,l]) => (
-            <div key={l} className="bg-[#0e0e0e] border border-[#1e1e1e] rounded-xl p-4">
-              <div className="text-2xl mb-2">{e}</div><div className="text-xs text-[#444]">{l}</div>
+            <div key={l} className="bg-[#1a1a1a] border border-[#333] rounded-xl p-4">
+              <div className="text-2xl mb-2">{e}</div><div className="text-xs text-[#aaa]">{l}</div>
             </div>
           ))}
         </div>
+        {/* ADDED: Bento Card after welcome grid */}
+        <CreditsCard />
       </div>
     </Shell>
   );
 
   if (step === 1) return (
     <Shell step={1} onNext={n} onBack={b} nextDisabled={!prof.name.trim() || !prof.dob}>
-      <h2 className="text-xl font-semibold text-[#e8e8e8] mb-1">Your Profile</h2>
-      <p className="text-[#444] text-xs mb-6">Born after 2010 not supported.</p>
+      <h2 className="text-xl font-bold text-white mb-1">Your Profile</h2>
+      <p className="text-[#888] text-xs mb-6">Born after 2010 not supported.</p>
       <div className="space-y-4">
         {[["Full Name","text","e.g. Alex Johnson","name"],["Ticker (optional)","text","AUTO","ticker"]].map(([l,t,p,k]) => (
-          <div key={k}><label className="text-xs text-[#444] uppercase tracking-wider block mb-2">{l}</label>
+          <div key={k}><label className="text-xs text-[#aaa] uppercase tracking-wider block mb-2">{l}</label>
             <Input type={t} placeholder={p} value={prof[k]} onChange={e => setProf(x => ({ ...x, [k]: k==="ticker"?e.target.value.toUpperCase():e.target.value }))} className="w-full" /></div>
         ))}
-        <div><label className="text-xs text-[#444] uppercase tracking-wider block mb-2">Date of Birth</label>
+        <div><label className="text-xs text-[#aaa] uppercase tracking-wider block mb-2">Date of Birth</label>
           <Input type="date" max="2010-12-31" min="1950-01-01" value={prof.dob} onChange={e => setProf(x => ({ ...x, dob: e.target.value }))} className="w-full" /></div>
       </div>
     </Shell>
@@ -251,14 +250,14 @@ const Onboarding = ({ onComplete }) => {
 
   if (step === 2) return (
     <Shell step={2} onNext={n} onBack={b} nextDisabled={!loc.country}>
-      <h2 className="text-xl font-semibold text-[#e8e8e8] mb-1">Country & Currency</h2>
-      <p className="text-[#444] text-xs mb-5">Sets your index denomination.</p>
+      <h2 className="text-xl font-bold text-white mb-1">Country & Currency</h2>
+      <p className="text-[#888] text-xs mb-5">Sets your index denomination.</p>
       <div className="grid grid-cols-2 gap-2 max-h-72 overflow-y-auto">
         {Object.keys(CURRENCIES).map(c => (
           <button key={c} onClick={() => setLoc({ country: c })}
-            className={`py-3 px-4 rounded-xl text-sm text-left border transition-all ${loc.country===c?"bg-[#e8e8e8] text-[#080808] border-[#e8e8e8]":"bg-[#0e0e0e] text-[#666] border-[#1e1e1e] hover:border-[#333] hover:text-[#aaa]"}`}>
+            className={`py-3 px-4 rounded-xl text-sm text-left border transition-all ${loc.country===c?"bg-white text-black border-white":"bg-[#1a1a1a] text-[#aaa] border-[#333] hover:border-[#666] hover:text-white"}`}>
             <span className="block font-medium">{c}</span>
-            <span className={`text-xs font-mono ${loc.country===c?"text-[#080808]/50":"text-[#333]"}`}>{CURRENCIES[c]?.code}</span>
+            <span className={`text-xs font-mono ${loc.country===c?"text-black/50":"text-[#666]"}`}>{CURRENCIES[c]?.code}</span>
           </button>
         ))}
       </div>
@@ -267,12 +266,12 @@ const Onboarding = ({ onComplete }) => {
 
   if (step === 3) return (
     <Shell step={3} onNext={n} onBack={b} nextDisabled={!price.startPrice || price.startPrice <= 0}>
-      <h2 className="text-xl font-semibold text-[#e8e8e8] mb-1">IPO Price</h2>
-      <p className="text-[#444] text-xs mb-6">Your starting index value.</p>
+      <h2 className="text-xl font-bold text-white mb-1">IPO Price</h2>
+      <p className="text-[#888] text-xs mb-6">Your starting index value.</p>
       <div className="grid grid-cols-4 gap-2 mb-4">
         {[100,250,500,1000].map(p => (
           <button key={p} onClick={() => setPrice({ startPrice: p })}
-            className={`py-3 rounded-xl text-sm font-semibold border transition-all ${price.startPrice===p?"bg-[#e8e8e8] text-[#080808] border-[#e8e8e8]":"bg-[#0e0e0e] text-[#666] border-[#1e1e1e] hover:border-[#333]"}`}>{p}</button>
+            className={`py-3 rounded-xl text-sm font-semibold border transition-all ${price.startPrice===p?"bg-white text-black border-white":"bg-[#1a1a1a] text-[#aaa] border-[#333] hover:border-[#666]"}`}>{p}</button>
         ))}
       </div>
       <Input type="number" min={1} placeholder="Custom value" value={price.startPrice||""} onChange={e=>setPrice({startPrice:parseFloat(e.target.value)})} className="w-full" />
@@ -281,13 +280,13 @@ const Onboarding = ({ onComplete }) => {
 
   if (step === 4) return (
     <Shell step={4} onNext={n} onBack={b}>
-      <h2 className="text-xl font-semibold text-[#e8e8e8] mb-1">Life Story</h2>
-      <p className="text-[#444] text-xs mb-4">Each phase shapes your chart curve.</p>
+      <h2 className="text-xl font-bold text-white mb-1">Life Story</h2>
+      <p className="text-[#888] text-xs mb-4">Each phase shapes your chart curve.</p>
       <div className="space-y-2 max-h-40 overflow-y-auto mb-4">
         {story.phases.map(ph => (
-          <div key={ph.id} className="flex items-center gap-3 bg-[#0e0e0e] border border-[#1e1e1e] rounded-xl px-4 py-2.5">
-            <span>{ph.emoji}</span><div className="flex-1"><p className="text-sm text-[#ccc]">{ph.name}</p><p className="text-xs text-[#444]">{ph.start} → {ph.end||"now"}</p></div>
-            <button onClick={()=>setStory(s=>({...s,phases:s.phases.filter(p=>p.id!==ph.id)}))} className="text-[#333] hover:text-red-400"><X size={13}/></button>
+          <div key={ph.id} className="flex items-center gap-3 bg-[#1a1a1a] border border-[#333] rounded-xl px-4 py-2.5">
+            <span>{ph.emoji}</span><div className="flex-1"><p className="text-sm text-[#eee]">{ph.name}</p><p className="text-xs text-[#888]">{ph.start} → {ph.end||"now"}</p></div>
+            <button onClick={()=>setStory(s=>({...s,phases:s.phases.filter(p=>p.id!==ph.id)}))} className="text-[#666] hover:text-red-400"><X size={13}/></button>
           </div>
         ))}
       </div>
@@ -297,22 +296,22 @@ const Onboarding = ({ onComplete }) => {
 
   if (step === 5) return (
     <Shell step={5} onNext={n} onBack={b}>
-      <h2 className="text-xl font-semibold text-[#e8e8e8] mb-1">Habits</h2>
-      <p className="text-[#444] text-xs mb-4">These move your index daily.</p>
+      <h2 className="text-xl font-bold text-white mb-1">Habits</h2>
+      <p className="text-[#888] text-xs mb-4">These move your index daily.</p>
       <div className="flex flex-wrap gap-2 mb-4">
         {DEFS.map(h=>(
           <button key={h.name} onClick={()=>{ if(!hab.habits.find(x=>x.name===h.name)) setHab(d=>({...d,habits:[...d.habits,{...h,id:uid()}]})); }}
-            className={`px-3 py-1.5 rounded-lg text-xs border transition-all ${hab.habits.find(x=>x.name===h.name)?"border-[#555] text-[#ccc] bg-[#1a1a1a]":"border-[#1e1e1e] text-[#444] hover:border-[#333] hover:text-[#888]"}`}>
+            className={`px-3 py-1.5 rounded-lg text-xs border transition-all ${hab.habits.find(x=>x.name===h.name)?"border-[#666] text-white bg-[#333]":"border-[#333] text-[#aaa] hover:border-[#666] hover:text-white"}`}>
             {h.emoji} {h.name}</button>
         ))}
       </div>
       <div className="space-y-1.5 max-h-32 overflow-y-auto mb-4">
         {hab.habits.map(h=>(
-          <div key={h.id} className="flex items-center justify-between bg-[#0e0e0e] border border-[#1e1e1e] rounded-xl px-4 py-2">
-            <span className="text-sm text-[#ccc]">{h.emoji} {h.name}</span>
+          <div key={h.id} className="flex items-center justify-between bg-[#1a1a1a] border border-[#333] rounded-xl px-4 py-2">
+            <span className="text-sm text-[#eee]">{h.emoji} {h.name}</span>
             <div className="flex items-center gap-2">
               <span className={`text-xs font-mono ${h.impact>=0?"text-green-400":"text-red-400"}`}>{h.impact>0?"+":""}{h.impact}%</span>
-              <button onClick={()=>setHab(d=>({...d,habits:d.habits.filter(x=>x.id!==h.id)}))} className="text-[#333] hover:text-red-400"><X size={12}/></button>
+              <button onClick={()=>setHab(d=>({...d,habits:d.habits.filter(x=>x.id!==h.id)}))} className="text-[#666] hover:text-red-400"><X size={12}/></button>
             </div>
           </div>
         ))}
@@ -322,10 +321,10 @@ const Onboarding = ({ onComplete }) => {
 
   return (
     <Shell step={6} onNext={finish} onBack={b} nextLabel="🚀 Launch">
-      <h2 className="text-xl font-semibold text-[#e8e8e8] mb-4">Ready to Launch</h2>
+      <h2 className="text-xl font-bold text-white mb-4">Ready to Launch</h2>
       {[["👤 Name",prof.name],["📈 Ticker",`$${prof.ticker||prof.name.slice(0,4).toUpperCase()}`],["🌍 Country",`${loc.country} · ${CURRENCIES[loc.country]?.code}`],["💰 IPO",`${CURRENCIES[loc.country]?.symbol}${price.startPrice}`],["🗂️ Phases",`${story.phases.length} phases`],["✅ Habits",`${hab.habits.length} habits`]].map(([k,v])=>(
-        <div key={k} className="flex justify-between items-center bg-[#0e0e0e] border border-[#1e1e1e] rounded-xl px-4 py-3 mb-2">
-          <span className="text-sm text-[#555]">{k}</span><span className="text-sm text-[#ccc]">{v}</span>
+        <div key={k} className="flex justify-between items-center bg-[#1a1a1a] border border-[#333] rounded-xl px-4 py-3 mb-2">
+          <span className="text-sm text-[#aaa]">{k}</span><span className="text-sm text-white">{v}</span>
         </div>
       ))}
     </Shell>
@@ -336,9 +335,9 @@ const PhaseForm = ({ onAdd }) => {
   const [d, setD] = useState({ name:"",start:"",end:"",trend:0,emoji:"📅",color:"#a3a3a3",desc:"" });
   const add = () => { if(!d.name.trim()||!d.start) return; onAdd({...d,id:uid()}); setD({name:"",start:"",end:"",trend:0,emoji:"📅",color:"#a3a3a3",desc:""}); };
   return (
-    <div className="bg-[#0a0a0a] border border-[#1a1a1a] rounded-xl p-4 space-y-2.5">
+    <div className="bg-[#111] border border-[#333] rounded-xl p-4 space-y-2.5">
       <div className="flex gap-2">
-        <select value={d.emoji} onChange={e=>setD(p=>({...p,emoji:e.target.value}))} className="bg-[#0e0e0e] border border-[#1e1e1e] rounded-lg px-2 py-2 text-base focus:outline-none">
+        <select value={d.emoji} onChange={e=>setD(p=>({...p,emoji:e.target.value}))} className="bg-[#1a1a1a] border border-[#333] rounded-lg px-2 py-2 text-base focus:outline-none text-white">
           {EMOJIS.map(em=><option key={em}>{em}</option>)}
         </select>
         <Input value={d.name} onChange={e=>setD(p=>({...p,name:e.target.value}))} placeholder="Phase name" className="flex-1" />
@@ -351,11 +350,11 @@ const PhaseForm = ({ onAdd }) => {
       <div className="grid grid-cols-1 gap-1">
         {TREND_OPTIONS.map(t=>(
           <button key={t.value} onClick={()=>setD(p=>({...p,trend:t.value}))}
-            className={`px-3 py-2 rounded-lg text-xs border text-left transition-all ${d.trend===t.value?"bg-[#e8e8e8] text-[#080808] border-[#e8e8e8]":"bg-[#0a0a0a] text-[#555] border-[#1a1a1a] hover:border-[#333]"}`}>
+            className={`px-3 py-2 rounded-lg text-xs border text-left transition-all ${d.trend===t.value?"bg-white text-black border-white":"bg-[#1a1a1a] text-[#aaa] border-[#333] hover:border-[#666]"}`}>
             {t.label}</button>
         ))}
       </div>
-      <div className="flex gap-2">{COLORS.map(c=>(<button key={c} onClick={()=>setD(p=>({...p,color:c}))} className={`w-5 h-5 rounded-full border-2 transition-all ${d.color===c?"border-[#e8e8e8] scale-110":"border-transparent opacity-50"}`} style={{backgroundColor:c}}/>))}</div>
+      <div className="flex gap-2">{COLORS.map(c=>(<button key={c} onClick={()=>setD(p=>({...p,color:c}))} className={`w-5 h-5 rounded-full border-2 transition-all ${d.color===c?"border-white scale-110":"border-transparent opacity-50"}`} style={{backgroundColor:c}}/>))}</div>
       <Btn onClick={add} disabled={!d.name.trim()||!d.start} className={`w-full ${!d.name.trim()||!d.start?"opacity-30":""}`}><Plus size={15}/>Add Phase</Btn>
     </div>
   );
@@ -378,11 +377,11 @@ const CustomTooltip = ({ active, payload, phases, curr }) => {
   const d = payload[0].payload;
   const ph = phases?.find(p=>d.date>=p.start&&(!p.end||d.date<=p.end));
   return (
-    <div className="bg-[#111] border border-[#1e1e1e] rounded-xl p-3 shadow-2xl">
-      <p className="text-xs text-[#444] mb-1">{d.date}</p>
+    <div className="bg-[#111] border border-[#333] rounded-xl p-3 shadow-2xl">
+      <p className="text-xs text-[#888] mb-1">{d.date}</p>
       {ph && <p className="text-xs mb-1.5" style={{color:ph.color}}>{ph.emoji} {ph.name}</p>}
-      <p className="text-base font-semibold text-[#e8e8e8] font-mono">{curr}{parseFloat(d.value).toFixed(2)}</p>
-      {d.mood !== undefined && <p className="text-xs text-[#555] mt-1">Mood: {MOOD_LABELS[d.mood]}</p>}
+      <p className="text-base font-semibold text-white font-mono">{curr}{parseFloat(d.value).toFixed(2)}</p>
+      {d.mood !== undefined && <p className="text-xs text-[#aaa] mt-1">Mood: {MOOD_LABELS[d.mood]}</p>}
     </div>
   );
 };
@@ -414,7 +413,7 @@ const Heatmap = ({ orderBook }) => {
   }, [days, year]);
   const getColor = (cell) => {
     if (!cell) return "transparent";
-    if (!cell.logged) return "#111";
+    if (!cell.logged) return "#222";
     if (cell.val > 5) return "#166534";
     if (cell.val > 2) return "#15803d";
     if (cell.val > 0) return "#16a34a";
@@ -427,7 +426,7 @@ const Heatmap = ({ orderBook }) => {
       <div className="flex gap-3 min-w-max">
         {months.map(({ month, weeks }) => (
           <div key={month}>
-            <p className="text-[10px] text-[#444] mb-1">{month}</p>
+            <p className="text-[10px] text-[#888] mb-1">{month}</p>
             <div className="flex gap-0.5">
               {weeks.map((week, wi) => (
                 <div key={wi} className="flex flex-col gap-0.5">
@@ -441,9 +440,9 @@ const Heatmap = ({ orderBook }) => {
         ))}
       </div>
       <div className="flex items-center gap-2 mt-2">
-        <span className="text-[10px] text-[#333]">Less</span>
-        {["#111","#7f1d1d","#16a34a","#166534"].map(c=><div key={c} className="w-2.5 h-2.5 rounded-sm" style={{backgroundColor:c}}/>)}
-        <span className="text-[10px] text-[#333]">More</span>
+        <span className="text-[10px] text-[#666]">Less</span>
+        {["#222","#7f1d1d","#16a34a","#166534"].map(c=><div key={c} className="w-2.5 h-2.5 rounded-sm" style={{backgroundColor:c}}/>)}
+        <span className="text-[10px] text-[#666]">More</span>
       </div>
     </div>
   );
@@ -492,18 +491,18 @@ const AICoach = ({ config, lifeIndex, orderBook, skills, weaknesses, phases, hab
 
   return (
     <Card>
-      <h2 className="font-semibold text-[#e8e8e8] text-sm flex items-center gap-2 mb-4"><Brain size={16} className="text-[#555]"/>AI Life Coach</h2>
+      <h2 className="font-semibold text-white text-sm flex items-center gap-2 mb-4"><Brain size={16} className="text-[#888]"/>AI Life Coach</h2>
       <div className="space-y-3 max-h-96 overflow-y-auto mb-4 pr-1">
         {messages.map((m,i)=>(
           <div key={i} className={`flex ${m.role==="user"?"justify-end":""}`}>
             <div className={`max-w-[85%] rounded-2xl px-4 py-3 text-sm leading-relaxed
-              ${m.role==="user"?"bg-[#1a1a1a] border border-[#222] text-[#ccc]":"bg-[#0e0e0e] border border-[#1a1a1a] text-[#aaa]"}`}>
-              {m.role==="assistant"&&<p className="text-[10px] text-[#333] mb-1 font-mono">COACH</p>}
+              ${m.role==="user"?"bg-[#222] border border-[#333] text-[#eee]":"bg-[#1a1a1a] border border-[#333] text-[#ccc]"}`}>
+              {m.role==="assistant"&&<p className="text-[10px] text-[#666] mb-1 font-mono">COACH</p>}
               {m.content}
             </div>
           </div>
         ))}
-        {loading && <div className="flex"><div className="bg-[#0e0e0e] border border-[#1a1a1a] rounded-2xl px-4 py-3 text-sm text-[#333]">Analysing your data...</div></div>}
+        {loading && <div className="flex"><div className="bg-[#1a1a1a] border border-[#333] rounded-2xl px-4 py-3 text-sm text-[#888]">Analysing your data...</div></div>}
       </div>
       <div className="flex gap-2">
         <Input value={input} onChange={e=>setInput(e.target.value)} onKeyDown={e=>e.key==="Enter"&&send()} placeholder="Ask about your patterns, habits, goals..." className="flex-1" />
@@ -511,7 +510,7 @@ const AICoach = ({ config, lifeIndex, orderBook, skills, weaknesses, phases, hab
       </div>
       <div className="flex flex-wrap gap-2 mt-3">
         {["What are my patterns?","Where am I weakest?","What should I focus on?","Predict my next 30 days"].map(q=>(
-          <button key={q} onClick={()=>{setInput(q);}} className="text-xs px-3 py-1.5 rounded-lg bg-[#0e0e0e] border border-[#1a1a1a] text-[#444] hover:text-[#888] hover:border-[#333] transition-all">{q}</button>
+          <button key={q} onClick={()=>{setInput(q);}} className="text-xs px-3 py-1.5 rounded-lg bg-[#1a1a1a] border border-[#333] text-[#ccc] hover:text-white hover:border-[#666] transition-all">{q}</button>
         ))}
       </div>
     </Card>
@@ -524,8 +523,8 @@ const SectorRadar = ({ sectorScores }) => {
   return (
     <ResponsiveContainer width="100%" height={220}>
       <RadarChart data={data}>
-        <PolarGrid stroke="#1e1e1e" />
-        <PolarAngleAxis dataKey="subject" tick={{ fill: "#444", fontSize: 11 }} />
+        <PolarGrid stroke="#333" />
+        <PolarAngleAxis dataKey="subject" tick={{ fill: "#888", fontSize: 11 }} />
         <Radar dataKey="value" stroke="#a3a3a3" fill="#a3a3a3" fillOpacity={0.1} strokeWidth={1.5} dot={{ r: 3, fill: "#a3a3a3" }} />
       </RadarChart>
     </ResponsiveContainer>
@@ -673,44 +672,44 @@ const Dashboard = ({ config, onReset }) => {
       {/* open capsule alert */}
       {openCapsules.map(c=>(
         <div key={c.id} className="fixed top-4 left-4 right-4 z-50 bg-[#111] border border-[#333] rounded-2xl p-4 shadow-2xl">
-          <p className="text-xs text-[#555] mb-1">⏰ Time Capsule Unlocked</p>
-          <p className="text-sm text-[#ccc] font-medium mb-2">{c.message}</p>
-          <p className="text-xs text-[#333]">Written on {c.createdDate}</p>
+          <p className="text-xs text-[#888] mb-1">⏰ Time Capsule Unlocked</p>
+          <p className="text-sm text-[#eee] font-medium mb-2">{c.message}</p>
+          <p className="text-xs text-[#666]">Written on {c.createdDate}</p>
           <Btn variant="ghost" onClick={()=>setTimeCapsules(p=>p.map(x=>x.id===c.id?{...x,opened:true}:x))} className="mt-2 w-full text-xs py-2">Dismiss</Btn>
         </div>
       ))}
 
       {/* topbar */}
-      <div className={`border-b border-[#141414] px-5 py-4 flex items-center justify-between sticky top-0 ${C.bg}/95 backdrop-blur z-20`}>
+      <div className={`border-b border-[#333] px-5 py-4 flex items-center justify-between sticky top-0 ${C.bg}/95 backdrop-blur z-20`}>
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 bg-[#111] border border-[#1e1e1e] rounded-xl flex items-center justify-center text-base">📈</div>
+          <div className="w-8 h-8 bg-[#111] border border-[#333] rounded-xl flex items-center justify-center text-base">📈</div>
           <div>
-            <h1 className="text-lg font-medium tracking-tighter text-[#e8e8e8]">
-              ENTROPY<span className="text-[#444]">ZERO</span>
+            <h1 className="text-lg font-bold tracking-tighter text-white">
+              ENTROPY<span className="text-[#888]">ZERO</span>
             </h1>
-            <p className="text-[10px] text-[#444] uppercase tracking-[0.2em] font-bold">${ticker}</p>
+            <p className="text-[10px] text-[#888] uppercase tracking-[0.2em] font-bold">${ticker}</p>
           </div>
         </div>
         <div className="text-right">
-          <p className="text-xl font-semibold text-[#e8e8e8] font-mono">{curr}{fmt(lifeIndex)}</p>
-          <p className={`text-xs font-mono ${todayChange>=0?"text-green-500":"text-red-500"}`}>{todayChange>=0?"+":""}{fmt(todayChange)}% today</p>
+          <p className="text-xl font-bold text-white font-mono">{curr}{fmt(lifeIndex)}</p>
+          <p className={`text-xs font-mono ${todayChange>=0?"text-green-400":"text-red-400"}`}>{todayChange>=0?"+":""}{fmt(todayChange)}% today</p>
         </div>
       </div>
 
       {/* streak banner */}
       {streak>=3 && (
-        <div className="bg-[#0d0d0d] border-b border-[#141414] px-5 py-2 flex items-center gap-2">
-          <Flame size={13} className="text-orange-500"/><span className="text-xs text-[#555]">{streak}-day streak · Keep going</span>
-          <span className="ml-auto text-xs text-[#333]">Next dividend at {Math.ceil(streak/7)*7} days</span>
+        <div className="bg-[#111] border-b border-[#333] px-5 py-2 flex items-center gap-2">
+          <Flame size={13} className="text-orange-500"/><span className="text-xs text-[#aaa]">{streak}-day streak · Keep going</span>
+          <span className="ml-auto text-xs text-[#666]">Next dividend at {Math.ceil(streak/7)*7} days</span>
         </div>
       )}
 
       {/* nav */}
-      <div className="border-b border-[#141414] flex bg-[#080808] sticky top-[57px] z-10 overflow-x-auto">
+      <div className="border-b border-[#333] flex bg-[#000000] sticky top-[57px] z-10 overflow-x-auto">
         {TABS.map(t=>(
           <button key={t.id} onClick={()=>setView(t.id)}
             className={`flex-shrink-0 flex flex-col items-center gap-1 px-4 py-3 text-[10px] font-medium transition-all border-b-2
-              ${view===t.id?"border-[#555] text-[#ccc]":"border-transparent text-[#333] hover:text-[#555]"}`}>
+              ${view===t.id?"border-white text-white":"border-transparent text-[#666] hover:text-[#aaa]"}`}>
             {t.icon}<span className="hidden sm:block">{t.label}</span>
           </button>
         ))}
@@ -724,14 +723,14 @@ const Dashboard = ({ config, onReset }) => {
           <div className="grid grid-cols-4 gap-2">
             {[
               {l:"IPO",v:`${curr}${fmt(config.startPrice)}`,s:"Listing"},
-              {l:"All-Time",v:`${allTime>=0?"+":""}${fmt(allTime)}%`,c:allTime>=0?"text-green-500":"text-red-500"},
-              {l:"7 Day",v:`${last7d>=0?"+":""}${fmt(last7d)}%`,c:last7d>=0?"text-green-500":"text-red-500"},
+              {l:"All-Time",v:`${allTime>=0?"+":""}${fmt(allTime)}%`,c:allTime>=0?"text-green-400":"text-red-400"},
+              {l:"7 Day",v:`${last7d>=0?"+":""}${fmt(last7d)}%`,c:last7d>=0?"text-green-400":"text-red-400"},
               {l:"Streak",v:`${streak}d 🔥`,s:"consecutive"},
             ].map(s=>(
               <div key={s.l} className={`${C.card} border ${C.border} rounded-2xl p-3 text-center`}>
-                <p className="text-[10px] text-[#333] mb-1">{s.l}</p>
-                <p className={`text-sm font-semibold font-mono ${s.c||"text-[#ccc]"}`}>{s.v}</p>
-                {s.s&&<p className="text-[10px] text-[#2a2a2a] mt-0.5">{s.s}</p>}
+                <p className="text-[10px] text-[#888] mb-1">{s.l}</p>
+                <p className={`text-sm font-semibold font-mono ${s.c||"text-white"}`}>{s.v}</p>
+                {s.s&&<p className="text-[10px] text-[#666] mt-0.5">{s.s}</p>}
               </div>
             ))}
           </div>
@@ -739,7 +738,7 @@ const Dashboard = ({ config, onReset }) => {
           {/* mood logger */}
           <Card>
             <div className="flex items-center justify-between">
-              <p className="text-xs text-[#444]">Today's Mood</p>
+              <p className="text-xs text-[#aaa]">Today's Mood</p>
               <div className="flex gap-2">
                 {MOOD_LABELS.map((m,i)=>(
                   <button key={i} onClick={()=>{ setMoodLog(p=>({...p,[today()]:i})); execute(`Mood: ${m}`,i*0.3-0.9,"mood"); }}
@@ -752,11 +751,11 @@ const Dashboard = ({ config, onReset }) => {
           {/* chart */}
           <Card>
             <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
-              <h2 className="font-semibold text-[#e8e8e8] flex items-center gap-2 text-sm"><Activity size={16} className="text-[#333]"/>Performance</h2>
+              <h2 className="font-semibold text-white flex items-center gap-2 text-sm"><Activity size={16} className="text-[#888]"/>Performance</h2>
               <div className="flex gap-1">
                 {["1M","3M","6M","1Y","ALL"].map(r=>(
                   <button key={r} onClick={()=>setTimeRange(r)}
-                    className={`px-2.5 py-1.5 rounded-lg text-xs font-medium transition-all ${timeRange===r?"bg-[#e8e8e8] text-[#080808]":"text-[#444] hover:text-[#888]"}`}>{r}</button>
+                    className={`px-2.5 py-1.5 rounded-lg text-xs font-medium transition-all ${timeRange===r?"bg-white text-black":"text-[#888] hover:text-white"}`}>{r}</button>
                 ))}
               </div>
             </div>
@@ -764,16 +763,16 @@ const Dashboard = ({ config, onReset }) => {
               <AreaChart data={filteredData}>
                 <defs>
                   <linearGradient id="grad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#e8e8e8" stopOpacity={0.06}/>
-                    <stop offset="95%" stopColor="#e8e8e8" stopOpacity={0}/>
+                    <stop offset="5%" stopColor="#ffffff" stopOpacity={0.06}/>
+                    <stop offset="95%" stopColor="#ffffff" stopOpacity={0}/>
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="#111"/>
-                <XAxis dataKey="date" stroke="#111" tick={{fill:"#2a2a2a",fontSize:10}} tickFormatter={v=>new Date(v).toLocaleDateString("en-US",{month:"short",year:"2-digit"})}/>
-                <YAxis stroke="#111" tick={{fill:"#2a2a2a",fontSize:10}} domain={["dataMin - 20","dataMax + 20"]}/>
+                <CartesianGrid strokeDasharray="3 3" stroke="#222"/>
+                <XAxis dataKey="date" stroke="#222" tick={{fill:"#666",fontSize:10}} tickFormatter={v=>new Date(v).toLocaleDateString("en-US",{month:"short",year:"2-digit"})}/>
+                <YAxis stroke="#222" tick={{fill:"#666",fontSize:10}} domain={["dataMin - 20","dataMax + 20"]}/>
                 <Tooltip content={<CustomTooltip phases={phases} curr={curr}/>}/>
                 {phases.map(ph=>ph.start&&<ReferenceLine key={ph.id} x={ph.start} stroke={ph.color} strokeDasharray="4 3" strokeOpacity={0.4} label={{value:ph.emoji,fill:ph.color,fontSize:12,position:"insideTopLeft"}}/>)}
-                <Area type="monotone" dataKey="value" stroke="#555" strokeWidth={1.5} fill="url(#grad)" dot={false} activeDot={{r:4,fill:"#e8e8e8",stroke:"#080808",strokeWidth:2}}/>
+                <Area type="monotone" dataKey="value" stroke="#666" strokeWidth={1.5} fill="url(#grad)" dot={false} activeDot={{r:4,fill:"#fff",stroke:"#000",strokeWidth:2}}/>
               </AreaChart>
             </ResponsiveContainer>
           </Card>
@@ -781,44 +780,44 @@ const Dashboard = ({ config, onReset }) => {
           {/* technicals */}
           {technicals && (
             <Card>
-              <h2 className="font-semibold text-[#e8e8e8] text-sm flex items-center gap-2 mb-4"><Zap size={16} className="text-[#333]"/>Technicals</h2>
+              <h2 className="font-semibold text-white text-sm flex items-center gap-2 mb-4"><Zap size={16} className="text-[#888]"/>Technicals</h2>
               <div className="flex flex-wrap gap-2 mb-4">
-                <span className={`px-3 py-1.5 rounded-lg text-xs font-bold border ${technicals.rating.includes("BUY")?"border-green-900 text-green-500 bg-green-950/30":technicals.rating.includes("SELL")?"border-red-900 text-red-500 bg-red-950/30":"border-[#1e1e1e] text-[#555]"}`}>{technicals.rating}</span>
-                {technicals.signals.map(s=><span key={s.label} className={`px-3 py-1.5 rounded-lg text-xs bg-[#0e0e0e] border border-[#1a1a1a] ${s.color}`}>{s.icon} {s.label}</span>)}
+                <span className={`px-3 py-1.5 rounded-lg text-xs font-bold border ${technicals.rating.includes("BUY")?"border-green-900 text-green-500 bg-green-950/30":technicals.rating.includes("SELL")?"border-red-900 text-red-500 bg-red-950/30":"border-[#333] text-[#aaa]"}`}>{technicals.rating}</span>
+                {technicals.signals.map(s=><span key={s.label} className={`px-3 py-1.5 rounded-lg text-xs bg-[#1a1a1a] border border-[#333] ${s.color}`}>{s.icon} {s.label}</span>)}
               </div>
               <div className="grid grid-cols-2 gap-2 mb-4">
-                {[["RSI (14)",fmt(technicals.rsi),technicals.rsi>70?"text-yellow-500":technicals.rsi<30?"text-blue-500":"text-[#888]"],["SMA 14",`${curr}${fmt(technicals.sma14)}`,"text-[#888]"],["SMA 30",`${curr}${fmt(technicals.sma30)}`,"text-[#888]"],["Momentum",`${technicals.mom>=0?"+":""}${fmt(technicals.mom)}`,technicals.mom>=0?"text-green-500":"text-red-500"],["52W High",`${curr}${fmt(technicals.high52)}`,"text-[#888]"],["52W Low",`${curr}${fmt(technicals.low52)}`,"text-[#888]"],["Volatility",`${fmt(technicals.vol)}σ`,technicals.vol>15?"text-red-500":technicals.vol>7?"text-yellow-500":"text-green-500"],["Net Worth",`${technicals.netWorth>=0?"+":""}${technicals.netWorth}pts`,technicals.netWorth>=0?"text-green-500":"text-red-500"]].map(([l,v,c])=>(
-                  <div key={l} className="bg-[#0a0a0a] border border-[#141414] rounded-xl px-4 py-3 flex justify-between items-center">
-                    <span className="text-xs text-[#333]">{l}</span><span className={`text-sm font-semibold font-mono ${c}`}>{v}</span>
+                {[["RSI (14)",fmt(technicals.rsi),technicals.rsi>70?"text-yellow-500":technicals.rsi<30?"text-blue-500":"text-[#aaa]"],["SMA 14",`${curr}${fmt(technicals.sma14)}`,"text-[#aaa]"],["SMA 30",`${curr}${fmt(technicals.sma30)}`,"text-[#aaa]"],["Momentum",`${technicals.mom>=0?"+":""}${fmt(technicals.mom)}`,technicals.mom>=0?"text-green-500":"text-red-500"],["52W High",`${curr}${fmt(technicals.high52)}`,"text-[#aaa]"],["52W Low",`${curr}${fmt(technicals.low52)}`,"text-[#aaa]"],["Volatility",`${fmt(technicals.vol)}σ`,technicals.vol>15?"text-red-500":technicals.vol>7?"text-yellow-500":"text-green-500"],["Net Worth",`${technicals.netWorth>=0?"+":""}${technicals.netWorth}pts`,technicals.netWorth>=0?"text-green-500":"text-red-500"]].map(([l,v,c])=>(
+                  <div key={l} className="bg-[#1a1a1a] border border-[#333] rounded-xl px-4 py-3 flex justify-between items-center">
+                    <span className="text-xs text-[#888]">{l}</span><span className={`text-sm font-semibold font-mono ${c}`}>{v}</span>
                   </div>
                 ))}
               </div>
               {/* sector radar */}
-              <div className="border-t border-[#141414] pt-4 mb-4">
-                <p className="text-xs text-[#333] mb-3">Sector Breakdown</p>
+              <div className="border-t border-[#333] pt-4 mb-4">
+                <p className="text-xs text-[#888] mb-3">Sector Breakdown</p>
                 <SectorRadar sectorScores={sectorScores}/>
                 <div className="grid grid-cols-5 gap-1 mt-2">
                   {SECTORS.map(s=>(
                     <div key={s.id} className="text-center">
                       <p className="text-base">{s.emoji}</p>
-                      <p className="text-[10px] text-[#333]">{Math.round(sectorScores[s.id]||50)}</p>
+                      <p className="text-[10px] text-[#666]">{Math.round(sectorScores[s.id]||50)}</p>
                     </div>
                   ))}
                 </div>
               </div>
               {/* balance sheet */}
-              <div className="bg-[#0a0a0a] border border-[#141414] rounded-xl p-4 mb-3">
-                <p className="text-xs text-[#333] mb-3">Balance Sheet</p>
+              <div className="bg-[#1a1a1a] border border-[#333] rounded-xl p-4 mb-3">
+                <p className="text-xs text-[#888] mb-3">Balance Sheet</p>
                 <div className="flex items-center gap-4">
-                  <div className="flex-1"><p className="text-xs text-green-600 mb-1">Assets</p><div className="h-1.5 bg-[#0d0d0d] rounded-full"><div className="h-full bg-green-800 rounded-full" style={{width:`${Math.min(100,technicals.assetScore)}%`}}/></div><p className="text-[10px] text-[#333] mt-1">+{technicals.assetScore}pts</p></div>
-                  <div className="flex-1"><p className="text-xs text-red-600 mb-1">Debt</p><div className="h-1.5 bg-[#0d0d0d] rounded-full"><div className="h-full bg-red-900 rounded-full" style={{width:`${Math.min(100,technicals.debtScore)}%`}}/></div><p className="text-[10px] text-[#333] mt-1">−{technicals.debtScore}pts</p></div>
-                  <div className="text-center"><p className="text-xs text-[#333]">Net</p><p className={`text-base font-bold font-mono ${technicals.netWorth>=0?"text-green-600":"text-red-600"}`}>{technicals.netWorth>=0?"+":""}{technicals.netWorth}</p></div>
+                  <div className="flex-1"><p className="text-xs text-green-500 mb-1">Assets</p><div className="h-1.5 bg-[#0d0d0d] rounded-full"><div className="h-full bg-green-600 rounded-full" style={{width:`${Math.min(100,technicals.assetScore)}%`}}/></div><p className="text-[10px] text-[#888] mt-1">+{technicals.assetScore}pts</p></div>
+                  <div className="flex-1"><p className="text-xs text-red-500 mb-1">Debt</p><div className="h-1.5 bg-[#0d0d0d] rounded-full"><div className="h-full bg-red-800 rounded-full" style={{width:`${Math.min(100,technicals.debtScore)}%`}}/></div><p className="text-[10px] text-[#888] mt-1">−{technicals.debtScore}pts</p></div>
+                  <div className="text-center"><p className="text-xs text-[#888]">Net</p><p className={`text-base font-bold font-mono ${technicals.netWorth>=0?"text-green-500":"text-red-500"}`}>{technicals.netWorth>=0?"+":""}{technicals.netWorth}</p></div>
                 </div>
               </div>
               {/* insight */}
-              <div className="bg-[#0a0a0a] border border-[#141414] rounded-xl p-4">
-                <p className="text-[10px] text-[#333] mb-2 uppercase tracking-wider">AI Signal</p>
-                <p className="text-xs text-[#555] leading-relaxed">
+              <div className="bg-[#1a1a1a] border border-[#333] rounded-xl p-4">
+                <p className="text-[10px] text-[#888] mb-2 uppercase tracking-wider">AI Signal</p>
+                <p className="text-xs text-[#ccc] leading-relaxed">
                   {technicals.rsi>70?"Running hot — gains may be overdone. Consolidation likely before next leg up.":technicals.rsi<30?"Deeply oversold. Historically strong recovery potential from these levels.":technicals.mom>5?"Positive momentum building. Continuation likely if habit consistency holds.":technicals.mom<-5?"Negative momentum dominant. Focus on high-yield habits to reverse trend.":"Range-bound. Accumulation phase — small consistent wins will break resistance."}
                   {technicals.netWorth<-10?" ⚠️ Debt exceeding assets.":technicals.netWorth>20?" 🌟 Strong asset base providing support.":""}
                   {streak>=7?` 🔥 ${streak}-day streak is adding daily compounding momentum.`:""}
@@ -829,7 +828,7 @@ const Dashboard = ({ config, onReset }) => {
 
           {/* event logger */}
           <Card>
-            <h2 className="font-semibold text-[#e8e8e8] text-sm flex items-center gap-2 mb-4"><Send size={16} className="text-[#333]"/>Log an Event</h2>
+            <h2 className="font-semibold text-white text-sm flex items-center gap-2 mb-4"><Send size={16} className="text-[#888]"/>Log an Event</h2>
             <Textarea value={scenario} onChange={e=>setScenario(e.target.value)} placeholder="What happened? (e.g. 'Scored 90% in finals', 'Big fight with best friend')" className="w-full h-20 mb-2"/>
             <div className="flex gap-2">
               <Input value={scenarioImpact} onChange={e=>setScenarioImpact(e.target.value)} placeholder="% override" className="flex-1 font-mono"/>
@@ -839,13 +838,13 @@ const Dashboard = ({ config, onReset }) => {
 
           {/* transaction log */}
           <Card>
-            <h2 className="font-semibold text-[#e8e8e8] text-sm mb-4">Transaction Log</h2>
-            {orderBook.length===0?<p className="text-[#2a2a2a] text-sm text-center py-8">No transactions yet.</p>:(
+            <h2 className="font-semibold text-white text-sm mb-4">Transaction Log</h2>
+            {orderBook.length===0?<p className="text-[#666] text-sm text-center py-8">No transactions yet.</p>:(
               <div className="space-y-2 max-h-64 overflow-y-auto pr-1">
                 {orderBook.slice(0,30).map(o=>(
-                  <div key={o.id} className="flex items-center justify-between bg-[#0a0a0a] border border-[#141414] rounded-xl px-4 py-3">
-                    <div><p className="text-sm text-[#999] truncate max-w-52 sm:max-w-64">{o.desc}</p><p className="text-[10px] text-[#2a2a2a]">{o.date} · {o.time}{o.tag?` · ${o.tag}`:""}</p></div>
-                    <div className="text-right"><p className={`text-sm font-bold font-mono ${o.change>=0?"text-green-600":"text-red-600"}`}>{o.change>0?"+":""}{fmt(o.change)}%</p><p className="text-[10px] text-[#2a2a2a] font-mono">{curr}{o.newIndex}</p></div>
+                  <div key={o.id} className="flex items-center justify-between bg-[#1a1a1a] border border-[#333] rounded-xl px-4 py-3">
+                    <div><p className="text-sm text-[#eee] truncate max-w-52 sm:max-w-64">{o.desc}</p><p className="text-[10px] text-[#888]">{o.date} · {o.time}{o.tag?` · ${o.tag}`:""}</p></div>
+                    <div className="text-right"><p className={`text-sm font-bold font-mono ${o.change>=0?"text-green-500":"text-red-500"}`}>{o.change>0?"+":""}{fmt(o.change)}%</p><p className="text-[10px] text-[#666] font-mono">{curr}{o.newIndex}</p></div>
                   </div>
                 ))}
               </div>
@@ -861,14 +860,14 @@ const Dashboard = ({ config, onReset }) => {
         {/* ── PRESS ─── */}
         {view==="press" && (<>
           <Card>
-            <h2 className="font-semibold text-[#e8e8e8] text-sm flex items-center gap-2 mb-4"><Newspaper size={16} className="text-[#333]"/>Publish Press Release</h2>
+            <h2 className="font-semibold text-white text-sm flex items-center gap-2 mb-4"><Newspaper size={16} className="text-[#888]"/>Publish Press Release</h2>
             <div className="space-y-3">
               <Input value={prTitle} onChange={e=>setPrTitle(e.target.value)} placeholder="Headline" className="w-full"/>
               <Textarea value={prBody} onChange={e=>setPrBody(e.target.value)} placeholder="Write your full press release — your thoughts, what happened, why it matters..." className="w-full h-28"/>
               <div className="flex gap-2 flex-wrap">
                 <div className="flex gap-1">
                   {[["positive","🟢"],["neutral","⚪"],["negative","🔴"]].map(([v,l])=>(
-                    <button key={v} onClick={()=>setPrType(v)} className={`px-3 py-2 rounded-xl text-xs font-medium border transition-all ${prType===v?"bg-[#e8e8e8] text-[#080808] border-[#e8e8e8]":"bg-[#0e0e0e] text-[#444] border-[#1e1e1e] hover:border-[#333]"}`}>{l} {v}</button>
+                    <button key={v} onClick={()=>setPrType(v)} className={`px-3 py-2 rounded-xl text-xs font-medium border transition-all ${prType===v?"bg-white text-black border-white":"bg-[#1a1a1a] text-[#aaa] border-[#333] hover:border-[#666]"}`}>{l} {v}</button>
                   ))}
                 </div>
                 <Input value={prImpact} onChange={e=>setPrImpact(e.target.value)} placeholder="% impact" className="w-24 font-mono"/>
@@ -884,15 +883,15 @@ const Dashboard = ({ config, onReset }) => {
             </div>
           </Card>
           {pressReleases.map(pr=>(
-            <div key={pr.id} className={`border rounded-2xl p-5 ${pr.type==="positive"?"bg-green-950/10 border-green-900/20":pr.type==="negative"?"bg-red-950/10 border-red-900/20":"bg-[#0e0e0e] border-[#1a1a1a]"}`}>
+            <div key={pr.id} className={`border rounded-2xl p-5 ${pr.type==="positive"?"bg-green-950/10 border-green-900/20":pr.type==="negative"?"bg-red-950/10 border-red-900/20":"bg-[#1a1a1a] border-[#333]"}`}>
               <div className="flex items-start justify-between mb-3">
-                <div><p className="font-semibold text-[#ccc] text-sm">{pr.title}</p><p className="text-[10px] text-[#2a2a2a] mt-1">{pr.date} · {pr.time}</p></div>
+                <div><p className="font-semibold text-[#ccc] text-sm">{pr.title}</p><p className="text-[10px] text-[#666] mt-1">{pr.date} · {pr.time}</p></div>
                 <div className="flex gap-2">
-                  {pr.impact!==0&&<span className={`text-xs font-bold font-mono px-2 py-1 rounded-lg ${pr.type==="positive"?"bg-green-950/40 text-green-600":pr.type==="negative"?"bg-red-950/40 text-red-600":"bg-[#111] text-[#555]"}`}>{pr.impact>0?"+":""}{pr.impact}%</span>}
-                  <button onClick={()=>setPressReleases(p=>p.filter(x=>x.id!==pr.id))} className="text-[#222] hover:text-red-600"><X size={14}/></button>
+                  {pr.impact!==0&&<span className={`text-xs font-bold font-mono px-2 py-1 rounded-lg ${pr.type==="positive"?"bg-green-950/40 text-green-500":pr.type==="negative"?"bg-red-950/40 text-red-500":"bg-[#222] text-[#888]"}`}>{pr.impact>0?"+":""}{pr.impact}%</span>}
+                  <button onClick={()=>setPressReleases(p=>p.filter(x=>x.id!==pr.id))} className="text-[#666] hover:text-red-500"><X size={14}/></button>
                 </div>
               </div>
-              <p className="text-sm text-[#444] leading-relaxed">{pr.body}</p>
+              <p className="text-sm text-[#bbb] leading-relaxed">{pr.body}</p>
             </div>
           ))}
         </>)}
@@ -902,10 +901,10 @@ const Dashboard = ({ config, onReset }) => {
           <div className="grid sm:grid-cols-2 gap-3">
             {habits.map(h=>(
               <div key={h.id} className={`${C.card} border ${C.border} rounded-2xl p-4 flex items-center justify-between`}>
-                <div><p className="font-medium text-[#ccc] text-sm">{h.emoji} {h.name}</p><p className={`text-xs mt-0.5 font-mono ${h.impact>=0?"text-green-600":"text-red-600"}`}>{h.impact>0?"+":""}{h.impact}%</p></div>
+                <div><p className="font-medium text-[#eee] text-sm">{h.emoji} {h.name}</p><p className={`text-xs mt-0.5 font-mono ${h.impact>=0?"text-green-500":"text-red-500"}`}>{h.impact>0?"+":""}{h.impact}%</p></div>
                 <div className="flex gap-2">
                   <Btn variant={h.impact>=0?"success":"danger"} onClick={()=>execute(h.name, h.impact, "habit")} className="text-xs py-2 px-3">Log</Btn>
-                  <button onClick={()=>setHabits(p=>p.filter(x=>x.id!==h.id))} className="text-[#222] hover:text-red-600"><Trash2 size={15}/></button>
+                  <button onClick={()=>setHabits(p=>p.filter(x=>x.id!==h.id))} className="text-[#444] hover:text-red-500"><Trash2 size={15}/></button>
                 </div>
               </div>
             ))}
@@ -915,10 +914,10 @@ const Dashboard = ({ config, onReset }) => {
             <div className="flex gap-2 flex-wrap">
               <Input placeholder="Name" className="flex-1 min-w-32" id="hn"/>
               <Input type="number" step="0.5" placeholder="%" className="w-16 font-mono" id="hi"/>
-              <select className="bg-[#0e0e0e] border border-[#1e1e1e] rounded-xl px-3 py-2.5 text-xs text-[#888] focus:outline-none" id="ht">
+              <select className="bg-[#1a1a1a] border border-[#333] rounded-xl px-3 py-2.5 text-xs text-[#aaa] focus:outline-none" id="ht">
                 <option value="positive">+ Positive</option><option value="negative">− Negative</option>
               </select>
-              <select className="bg-[#0e0e0e] border border-[#1e1e1e] rounded-xl px-3 py-2.5 text-xs text-[#888] focus:outline-none" id="hs">
+              <select className="bg-[#1a1a1a] border border-[#333] rounded-xl px-3 py-2.5 text-xs text-[#aaa] focus:outline-none" id="hs">
                 <option value="auto">🤖 Auto-detect</option>
                 {SECTORS.map(s=><option key={s.id} value={s.id}>{s.emoji} {s.label}</option>)}
               </select>
@@ -935,18 +934,18 @@ const Dashboard = ({ config, onReset }) => {
           </Card>
           {/* P&L */}
           <Card>
-            <h3 className="font-semibold text-[#ccc] text-sm mb-4 flex items-center gap-2"><TrendingUp size={15} className="text-[#333]"/>Monthly P&L</h3>
-            {pnl.length===0?<p className="text-[#2a2a2a] text-sm text-center py-4">No data yet.</p>:(
+            <h3 className="font-semibold text-[#ccc] text-sm mb-4 flex items-center gap-2"><TrendingUp size={15} className="text-[#888]"/>Monthly P&L</h3>
+            {pnl.length===0?<p className="text-[#666] text-sm text-center py-4">No data yet.</p>:(
               <div className="space-y-2">
                 {pnl.map(m=>(
-                  <div key={m.month} className="flex items-center justify-between bg-[#0a0a0a] border border-[#141414] rounded-xl px-4 py-3">
-                    <span className="text-xs text-[#555] font-mono">{m.month}</span>
+                  <div key={m.month} className="flex items-center justify-between bg-[#1a1a1a] border border-[#333] rounded-xl px-4 py-3">
+                    <span className="text-xs text-[#888] font-mono">{m.month}</span>
                     <div className="flex gap-4">
-                      <span className="text-xs text-green-600 font-mono">+{fmt(m.gain)}%</span>
-                      <span className="text-xs text-red-600 font-mono">{fmt(m.loss)}%</span>
-                      <span className={`text-xs font-bold font-mono ${m.gain+m.loss>=0?"text-green-500":"text-red-500"}`}>{m.gain+m.loss>=0?"+":""}{fmt(m.gain+m.loss)}%</span>
+                      <span className="text-xs text-green-500 font-mono">+{fmt(m.gain)}%</span>
+                      <span className="text-xs text-red-500 font-mono">{fmt(m.loss)}%</span>
+                      <span className={`text-xs font-bold font-mono ${m.gain+m.loss>=0?"text-green-400":"text-red-400"}`}>{m.gain+m.loss>=0?"+":""}{fmt(m.gain+m.loss)}%</span>
                     </div>
-                    <span className="text-[10px] text-[#2a2a2a]">{m.count} logs</span>
+                    <span className="text-[10px] text-[#666]">{m.count} logs</span>
                   </div>
                 ))}
               </div>
@@ -957,37 +956,37 @@ const Dashboard = ({ config, onReset }) => {
         {/* ── ASSETS ─── */}
         {view==="assets" && (<>
           <Card>
-            <h2 className="font-semibold text-[#e8e8e8] text-sm flex items-center gap-2 mb-4"><Star size={16} className="text-[#333]"/>Skills <span className="text-[#333] font-normal">— Assets</span></h2>
+            <h2 className="font-semibold text-white text-sm flex items-center gap-2 mb-4"><Star size={16} className="text-[#888]"/>Skills <span className="text-[#666] font-normal">— Assets</span></h2>
             <div className="space-y-3 mb-5">
-              {skills.length===0&&<p className="text-[#2a2a2a] text-sm text-center py-4">No skills yet.</p>}
+              {skills.length===0&&<p className="text-[#666] text-sm text-center py-4">No skills yet.</p>}
               {skills.map(sk=>(
-                <div key={sk.id} className="bg-[#0a0a0a] border border-[#141414] rounded-xl p-4">
+                <div key={sk.id} className="bg-[#1a1a1a] border border-[#333] rounded-xl p-4">
                   <div className="flex items-start justify-between mb-2">
-                    <div><p className="font-medium text-[#ccc] text-sm">{sk.name}</p><p className="text-xs text-[#333]">{sk.category} · {SKILL_LEVELS[sk.level]}</p></div>
+                    <div><p className="font-medium text-[#eee] text-sm">{sk.name}</p><p className="text-xs text-[#888]">{sk.category} · {SKILL_LEVELS[sk.level]}</p></div>
                     <div className="flex gap-2">
-                      <span className="text-xs font-bold text-green-700 bg-green-950/30 px-2 py-1 rounded-lg">+{(sk.level+1)*5}pts</span>
-                      <button onClick={()=>{setSkills(p=>p.map(x=>x.id===sk.id?{...x,level:Math.min(4,x.level+1)}:x));execute(`📈 Levelled up: ${sk.name}`,(sk.level+1)*0.8,"skill");}} className="text-[10px] bg-[#111] border border-[#1e1e1e] hover:border-[#333] px-2 py-1 rounded-lg text-[#555] hover:text-[#999] transition-all">Level Up</button>
-                      <button onClick={()=>setSkills(p=>p.filter(x=>x.id!==sk.id))} className="text-[#222] hover:text-red-600"><X size={13}/></button>
+                      <span className="text-xs font-bold text-green-500 bg-green-950/30 px-2 py-1 rounded-lg">+{(sk.level+1)*5}pts</span>
+                      <button onClick={()=>{setSkills(p=>p.map(x=>x.id===sk.id?{...x,level:Math.min(4,x.level+1)}:x));execute(`📈 Levelled up: ${sk.name}`,(sk.level+1)*0.8,"skill");}} className="text-[10px] bg-[#222] border border-[#333] hover:border-[#666] px-2 py-1 rounded-lg text-[#aaa] hover:text-white transition-all">Level Up</button>
+                      <button onClick={()=>setSkills(p=>p.filter(x=>x.id!==sk.id))} className="text-[#444] hover:text-red-500"><X size={13}/></button>
                     </div>
                   </div>
-                  <div className="flex gap-1">{SKILL_LEVELS.map((_,i)=><div key={i} className={`flex-1 h-1 rounded-full ${i<=sk.level?"bg-green-800":"bg-[#141414]"}`}/>)}</div>
-                  {sk.developingHabit&&<p className="text-[10px] text-[#2a2a2a] mt-2">🔁 Via: {sk.developingHabit}</p>}
+                  <div className="flex gap-1">{SKILL_LEVELS.map((_,i)=><div key={i} className={`flex-1 h-1 rounded-full ${i<=sk.level?"bg-green-600":"bg-[#222]"}`}/>)}</div>
+                  {sk.developingHabit&&<p className="text-[10px] text-[#666] mt-2">🔁 Via: {sk.developingHabit}</p>}
                 </div>
               ))}
             </div>
-            <div className="border-t border-[#141414] pt-4 space-y-2">
+            <div className="border-t border-[#333] pt-4 space-y-2">
               <div className="flex gap-2 flex-wrap">
                 <Input value={newSkill.name} onChange={e=>setNewSkill(p=>({...p,name:e.target.value}))} placeholder="Skill name" className="flex-1 min-w-32"/>
-                <select value={newSkill.category} onChange={e=>setNewSkill(p=>({...p,category:e.target.value}))} className="bg-[#0e0e0e] border border-[#1e1e1e] rounded-xl px-3 py-2.5 text-xs text-[#888] focus:outline-none">
+                <select value={newSkill.category} onChange={e=>setNewSkill(p=>({...p,category:e.target.value}))} className="bg-[#1a1a1a] border border-[#333] rounded-xl px-3 py-2.5 text-xs text-[#aaa] focus:outline-none">
                   {["Technical","Creative","Social","Physical","Mental","Academic","Leadership"].map(c=><option key={c}>{c}</option>)}
                 </select>
-                <select value={newSkill.sector} onChange={e=>setNewSkill(p=>({...p,sector:e.target.value}))} className="bg-[#0e0e0e] border border-[#1e1e1e] rounded-xl px-3 py-2.5 text-xs text-[#888] focus:outline-none">
+                <select value={newSkill.sector} onChange={e=>setNewSkill(p=>({...p,sector:e.target.value}))} className="bg-[#1a1a1a] border border-[#333] rounded-xl px-3 py-2.5 text-xs text-[#aaa] focus:outline-none">
                   <option value="auto">🤖 Auto-detect</option>
                   {SECTORS.map(s=><option key={s.id} value={s.id}>{s.emoji} {s.label}</option>)}
                 </select>
               </div>
               <div className="flex gap-2">
-                <select value={newSkill.level} onChange={e=>setNewSkill(p=>({...p,level:parseInt(e.target.value)}))} className="flex-1 bg-[#0e0e0e] border border-[#1e1e1e] rounded-xl px-3 py-2.5 text-sm text-[#888] focus:outline-none">
+                <select value={newSkill.level} onChange={e=>setNewSkill(p=>({...p,level:parseInt(e.target.value)}))} className="flex-1 bg-[#1a1a1a] border border-[#333] rounded-xl px-3 py-2.5 text-sm text-[#aaa] focus:outline-none">
                   {SKILL_LEVELS.map((l,i)=><option key={l} value={i}>{l}</option>)}
                 </select>
                 <Input value={newSkill.developingHabit} onChange={e=>setNewSkill(p=>({...p,developingHabit:e.target.value}))} placeholder="Developing via habit (optional)" className="flex-1"/>
@@ -997,33 +996,33 @@ const Dashboard = ({ config, onReset }) => {
           </Card>
 
           <Card>
-            <h2 className="font-semibold text-[#e8e8e8] text-sm flex items-center gap-2 mb-4"><AlertTriangle size={16} className="text-[#333]"/>Weaknesses <span className="text-[#333] font-normal">— Debt</span></h2>
+            <h2 className="font-semibold text-white text-sm flex items-center gap-2 mb-4"><AlertTriangle size={16} className="text-[#888]"/>Weaknesses <span className="text-[#666] font-normal">— Debt</span></h2>
             <div className="space-y-3 mb-5">
-              {weaknesses.length===0&&<p className="text-[#2a2a2a] text-sm text-center py-4">No weaknesses logged.</p>}
+              {weaknesses.length===0&&<p className="text-[#666] text-sm text-center py-4">No weaknesses logged.</p>}
               {weaknesses.map(w=>(
                 <div key={w.id} className="bg-red-950/5 border border-red-950/20 rounded-xl p-4">
                   <div className="flex items-start justify-between mb-2">
-                    <div><p className="font-medium text-[#ccc] text-sm">{w.name}</p><p className="text-xs text-[#333]">{w.category} · {DEBT_SEVERITY[w.severity]}</p></div>
+                    <div><p className="font-medium text-[#eee] text-sm">{w.name}</p><p className="text-xs text-[#888]">{w.category} · {DEBT_SEVERITY[w.severity]}</p></div>
                     <div className="flex gap-2">
-                      <span className="text-xs font-bold text-red-800 bg-red-950/30 px-2 py-1 rounded-lg">−{(w.severity+1)*8}pts</span>
-                      <button onClick={()=>{if(w.severity>0){setWeaknesses(p=>p.map(x=>x.id===w.id?{...x,severity:x.severity-1}:x));execute(`Improved: ${w.name}`,1.5,"debt");}else{setWeaknesses(p=>p.filter(x=>x.id!==w.id));execute(`✅ Overcame: ${w.name}`,3,"debt");}}} className="text-[10px] bg-green-950/20 border border-green-900/30 px-2 py-1 rounded-lg text-green-700 hover:text-green-500 transition-all">Improve</button>
-                      <button onClick={()=>setWeaknesses(p=>p.filter(x=>x.id!==w.id))} className="text-[#222] hover:text-red-600"><X size={13}/></button>
+                      <span className="text-xs font-bold text-red-500 bg-red-950/30 px-2 py-1 rounded-lg">−{(w.severity+1)*8}pts</span>
+                      <button onClick={()=>{if(w.severity>0){setWeaknesses(p=>p.map(x=>x.id===w.id?{...x,severity:x.severity-1}:x));execute(`Improved: ${w.name}`,1.5,"debt");}else{setWeaknesses(p=>p.filter(x=>x.id!==w.id));execute(`✅ Overcame: ${w.name}`,3,"debt");}}} className="text-[10px] bg-green-950/20 border border-green-900/30 px-2 py-1 rounded-lg text-green-500 hover:text-green-400 transition-all">Improve</button>
+                      <button onClick={()=>setWeaknesses(p=>p.filter(x=>x.id!==w.id))} className="text-[#444] hover:text-red-500"><X size={13}/></button>
                     </div>
                   </div>
-                  <div className="flex gap-1">{DEBT_SEVERITY.map((_,i)=><div key={i} className={`flex-1 h-1 rounded-full ${i<=w.severity?"bg-red-900":"bg-[#141414]"}`}/>)}</div>
-                  {w.plan&&<p className="text-[10px] text-[#2a2a2a] mt-2">📋 {w.plan}</p>}
+                  <div className="flex gap-1">{DEBT_SEVERITY.map((_,i)=><div key={i} className={`flex-1 h-1 rounded-full ${i<=w.severity?"bg-red-800":"bg-[#222]"}`}/>)}</div>
+                  {w.plan&&<p className="text-[10px] text-[#888] mt-2">📋 {w.plan}</p>}
                 </div>
               ))}
             </div>
-            <div className="border-t border-[#141414] pt-4 space-y-2">
+            <div className="border-t border-[#333] pt-4 space-y-2">
               <div className="flex gap-2 flex-wrap">
                 <Input value={newDebt.name} onChange={e=>setNewDebt(p=>({...p,name:e.target.value}))} placeholder="Weakness name" className="flex-1 min-w-32"/>
-                <select value={newDebt.category} onChange={e=>setNewDebt(p=>({...p,category:e.target.value}))} className="bg-[#0e0e0e] border border-[#1e1e1e] rounded-xl px-3 py-2.5 text-xs text-[#888] focus:outline-none">
+                <select value={newDebt.category} onChange={e=>setNewDebt(p=>({...p,category:e.target.value}))} className="bg-[#1a1a1a] border border-[#333] rounded-xl px-3 py-2.5 text-xs text-[#aaa] focus:outline-none">
                   {["Mental","Social","Physical","Academic","Financial","Emotional"].map(c=><option key={c}>{c}</option>)}
                 </select>
               </div>
               <div className="flex gap-2">
-                <select value={newDebt.severity} onChange={e=>setNewDebt(p=>({...p,severity:parseInt(e.target.value)}))} className="flex-1 bg-[#0e0e0e] border border-[#1e1e1e] rounded-xl px-3 py-2.5 text-sm text-[#888] focus:outline-none">
+                <select value={newDebt.severity} onChange={e=>setNewDebt(p=>({...p,severity:parseInt(e.target.value)}))} className="flex-1 bg-[#1a1a1a] border border-[#333] rounded-xl px-3 py-2.5 text-sm text-[#aaa] focus:outline-none">
                   {DEBT_SEVERITY.map((l,i)=><option key={l} value={i}>{l}</option>)}
                 </select>
                 <Input value={newDebt.plan} onChange={e=>setNewDebt(p=>({...p,plan:e.target.value}))} placeholder="Improvement plan" className="flex-1"/>
@@ -1034,20 +1033,20 @@ const Dashboard = ({ config, onReset }) => {
 
           {/* Goals as IPOs */}
           <Card>
-            <h2 className="font-semibold text-[#e8e8e8] text-sm flex items-center gap-2 mb-4"><Target size={16} className="text-[#333]"/>Goals <span className="text-[#333] font-normal">— Pending IPOs</span></h2>
+            <h2 className="font-semibold text-white text-sm flex items-center gap-2 mb-4"><Target size={16} className="text-[#888]"/>Goals <span className="text-[#666] font-normal">— Pending IPOs</span></h2>
             <div className="space-y-2 mb-4">
               {goals.map(g=>(
-                <div key={g.id} className={`border rounded-xl px-4 py-3 flex items-center justify-between ${g.achieved?"border-green-900/20 bg-green-950/5":"border-[#141414] bg-[#0a0a0a]"}`}>
-                  <div><p className="text-sm text-[#ccc]">{g.title}</p><p className="text-xs text-[#333]">{g.sector} · +{g.reward}% on achievement</p></div>
+                <div key={g.id} className={`border rounded-xl px-4 py-3 flex items-center justify-between ${g.achieved?"border-green-900/20 bg-green-950/5":"border-[#333] bg-[#1a1a1a]"}`}>
+                  <div><p className="text-sm text-[#eee]">{g.title}</p><p className="text-xs text-[#888]">{g.sector} · +{g.reward}% on achievement</p></div>
                   <div className="flex gap-2">
-                    {!g.achieved&&<button onClick={()=>{setGoals(p=>p.map(x=>x.id===g.id?{...x,achieved:true}:x));execute(`🏆 IPO Listed: ${g.title}`,g.reward,"goal");}} className="text-[10px] bg-[#111] border border-[#1e1e1e] px-3 py-1.5 rounded-lg text-[#555] hover:text-green-500 hover:border-green-900 transition-all">Achieve 🚀</button>}
-                    {g.achieved&&<span className="text-xs text-green-700">✓ Listed</span>}
-                    <button onClick={()=>setGoals(p=>p.filter(x=>x.id!==g.id))} className="text-[#222] hover:text-red-600"><X size={13}/></button>
+                    {!g.achieved&&<button onClick={()=>{setGoals(p=>p.map(x=>x.id===g.id?{...x,achieved:true}:x));execute(`🏆 IPO Listed: ${g.title}`,g.reward,"goal");}} className="text-[10px] bg-[#222] border border-[#333] px-3 py-1.5 rounded-lg text-[#aaa] hover:text-green-400 hover:border-green-900 transition-all">Achieve 🚀</button>}
+                    {g.achieved&&<span className="text-xs text-green-500">✓ Listed</span>}
+                    <button onClick={()=>setGoals(p=>p.filter(x=>x.id!==g.id))} className="text-[#444] hover:text-red-500"><X size={13}/></button>
                   </div>
                 </div>
               ))}
             </div>
-            <div className="flex gap-2 flex-wrap border-t border-[#141414] pt-4">
+            <div className="flex gap-2 flex-wrap border-t border-[#333] pt-4">
               <Input value={newGoal.title} onChange={e=>setNewGoal(p=>({...p,title:e.target.value}))} placeholder="Goal title" className="flex-1 min-w-32"/>
               <Input type="number" value={newGoal.reward} onChange={e=>setNewGoal(p=>({...p,reward:parseFloat(e.target.value)||0}))} placeholder="% reward" className="w-20 font-mono"/>
               <Btn onClick={()=>{if(!newGoal.title.trim()) return;setGoals(p=>[...p,{...newGoal,id:uid(),achieved:false}]);setNewGoal({title:"",target:"",sector:"academics",reward:0});}}><Plus size={15}/></Btn>
@@ -1058,44 +1057,47 @@ const Dashboard = ({ config, onReset }) => {
         {/* ── PHASES ─── */}
         {view==="phases" && (<>
           {phases.map(ph=>(
-            <div key={ph.id} className={`${C.card} border rounded-2xl p-5`} style={{borderColor:ph.color+"20"}}>
+            <div key={ph.id} className={`${C.card} border rounded-2xl p-5`} style={{borderColor:ph.color+"40"}}>
               <div className="flex items-start justify-between mb-2">
                 <div className="flex items-center gap-2"><span className="text-xl">{ph.emoji}</span>
-                  <div><p className="font-semibold text-[#ccc]">{ph.name}</p><p className="text-xs text-[#333]">{ph.start} → {ph.end||"Ongoing"}</p></div>
+                  <div><p className="font-semibold text-[#eee]">{ph.name}</p><p className="text-xs text-[#888]">{ph.start} → {ph.end||"Ongoing"}</p></div>
                   <span className="text-xs px-2 py-0.5 rounded-lg" style={{backgroundColor:ph.color+"15",color:ph.color}}>{TREND_OPTIONS.find(t=>t.value===ph.trend)?.label?.split(" ").slice(1).join(" ")||"Flat"}</span>
                 </div>
-                <button onClick={()=>setPhases(p=>p.filter(x=>x.id!==ph.id))} className="text-[#222] hover:text-red-600"><Trash2 size={14}/></button>
+                <button onClick={()=>setPhases(p=>p.filter(x=>x.id!==ph.id))} className="text-[#444] hover:text-red-500"><Trash2 size={14}/></button>
               </div>
-              {ph.desc&&<p className="text-sm text-[#444] leading-relaxed mt-3 border-t border-[#141414] pt-3">{ph.desc}</p>}
+              {ph.desc&&<p className="text-sm text-[#bbb] leading-relaxed mt-3 border-t border-[#333] pt-3">{ph.desc}</p>}
             </div>
           ))}
-          {phases.length===0&&<p className="text-[#2a2a2a] text-sm text-center py-10">No phases yet.</p>}
+          {phases.length===0&&<p className="text-[#666] text-sm text-center py-10">No phases yet.</p>}
           <Card><p className="font-semibold text-[#ccc] text-sm mb-4">Add Phase</p><PhaseForm onAdd={ph=>setPhases(p=>[...p,ph])}/></Card>
         </>)}
 
         {/* ── SETTINGS (dedicated tab) ─── */}
         {view==="settings" && (
           <div className="space-y-4">
+            {/* ADDED: Bento Credits Card in Settings */}
+            <CreditsCard />
+            
             <Card>
-              <h2 className="font-semibold text-[#e8e8e8] text-sm mb-4 flex items-center gap-2"><Settings size={15} className="text-[#333]"/>Profile</h2>
+              <h2 className="font-semibold text-white text-sm mb-4 flex items-center gap-2"><Settings size={15} className="text-[#888]"/>Profile</h2>
               {[["Name",config.name],["Ticker",`${ticker}`],["Country",config.country],["Currency",`${curr} · ${CURRENCIES[config.country]?.code}`],["IPO Price",`${curr}${fmt(config.startPrice)}`],["Date of Birth",config.dob||"—"]].map(([k,v])=>(
-                <div key={k} className="flex justify-between items-center py-3 border-b border-[#111] last:border-0">
-                  <span className="text-sm text-[#333]">{k}</span><span className="text-sm text-[#777]">{v}</span>
+                <div key={k} className="flex justify-between items-center py-3 border-b border-[#333] last:border-0">
+                  <span className="text-sm text-[#aaa]">{k}</span><span className="text-sm text-white">{v}</span>
                 </div>
               ))}
             </Card>
             <Card>
-              <h2 className="font-semibold text-[#e8e8e8] text-sm mb-1 flex items-center gap-2"><Download size={15} className="text-[#333]"/>Export Data</h2>
-              <p className="text-xs text-[#333] mb-4">Download a full backup of your index, habits, phases, skills, press releases and more as a JSON file.</p>
+              <h2 className="font-semibold text-white text-sm mb-1 flex items-center gap-2"><Download size={15} className="text-[#888]"/>Export Data</h2>
+              <p className="text-xs text-[#888] mb-4">Download a full backup of your index, habits, phases, skills, press releases and more as a JSON file.</p>
               <Btn variant="ghost" className="w-full" onClick={()=>{
                 const blob=new Blob([JSON.stringify({config,chartData,orderBook,habits,phases,skills,weaknesses,pressReleases,moodLog,goals,timeCapsules,exportDate:new Date().toISOString(),version:"3.0"},null,2)],{type:"application/json"});
                 const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download=`mylife-index-${today()}.json`;document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);
               }}><Download size={15}/>Export All Data as JSON</Btn>
             </Card>
             <Card>
-              <h2 className="font-semibold text-[#e8e8e8] text-sm mb-1 flex items-center gap-2"><Upload size={15} className="text-[#333]"/>Import Data</h2>
-              <p className="text-xs text-[#333] mb-4">Restore from a previously exported JSON backup. This will overwrite your current data.</p>
-              <label className="w-full px-4 py-2.5 rounded-xl font-medium text-sm transition-all flex items-center justify-center gap-2 bg-[#161616] border border-[#1e1e1e] text-[#888] hover:bg-[#1a1a1a] hover:text-[#e8e8e8] cursor-pointer">
+              <h2 className="font-semibold text-white text-sm mb-1 flex items-center gap-2"><Upload size={15} className="text-[#888]"/>Import Data</h2>
+              <p className="text-xs text-[#888] mb-4">Restore from a previously exported JSON backup. This will overwrite your current data.</p>
+              <label className="w-full px-4 py-2.5 rounded-xl font-medium text-sm transition-all flex items-center justify-center gap-2 bg-[#1a1a1a] border border-[#333] text-[#aaa] hover:bg-[#222] hover:text-white cursor-pointer">
                 <Upload size={15}/>Choose Backup File (.json)
                 <input type="file" accept=".json" className="hidden" onChange={e=>{
                   const f=e.target.files[0];
@@ -1105,11 +1107,8 @@ const Dashboard = ({ config, onReset }) => {
                     try {
                       const d=JSON.parse(ev.target.result);
                       let imported = { chart: null, orders: null, habits: null, phases: null, format: "unknown" };
-                      // ── Detect OLD Nikshep Life Index format ──────────────
-                      // Old app saved as: { lifeIndex, chartData, orderBook, habits, majorEventUsed, timestamp }
                       if (d.chartData && d.orderBook !== undefined && !d.version) {
                         imported.format = "nikshep-v1";
-                        // Convert chartData: old = [{date, value, timestamp}] — same shape, just remap
                         if (Array.isArray(d.chartData)) {
                           imported.chart = d.chartData.map(p => ({
                             date: p.date,
@@ -1117,9 +1116,6 @@ const Dashboard = ({ config, onReset }) => {
                             timestamp: p.timestamp || new Date(p.date).getTime()
                           }));
                         }
-
-                        // Convert orderBook: old = [{id, time, date, description, change, newIndex}]
-                        // New format uses "desc" not "description"
                         if (Array.isArray(d.orderBook)) {
                           imported.orders = d.orderBook.map(o => ({
                             id: o.id || uid(),
@@ -1131,13 +1127,9 @@ const Dashboard = ({ config, onReset }) => {
                             tag: "imported"
                           }));
                         }
-
-                        // Convert habits: old = [{id, name, impacts:[...], tiers:[...], type, failurePenalty}]
-                        // New format uses single impact value + emoji
                         if (Array.isArray(d.habits)) {
                           const converted = [];
                           d.habits.forEach(h => {
-                            // Multi-tier old habits → one new habit per tier
                             if (Array.isArray(h.impacts) && h.impacts.length > 0) {
                               h.impacts.forEach((imp, i) => {
                                 const tierName = Array.isArray(h.tiers) && h.tiers[i] ? ` (${h.tiers[i]})` : "";
@@ -1151,7 +1143,6 @@ const Dashboard = ({ config, onReset }) => {
                                   sector: "health"
                                 });
                               });
-                              // Also add failure penalty as a separate habit if it exists
                               if (h.failurePenalty !== null && h.failurePenalty !== undefined) {
                                 converted.push({
                                   id: uid(),
@@ -1163,7 +1154,6 @@ const Dashboard = ({ config, onReset }) => {
                                 });
                               }
                             } else {
-                              // Already flat format
                               const impact = parseFloat(h.impact) || 0;
                               converted.push({
                                 id: h.id || uid(),
@@ -1178,8 +1168,6 @@ const Dashboard = ({ config, onReset }) => {
                           imported.habits = converted;
                         }
                       }
-
-                      // ── Detect NEW MyLife Index format (v2/v3) ────────────
                       else if (d.version || (d.chartData && d.habits && d.phases !== undefined)) {
                         imported.format = "mylife-v2";
                         imported.chart   = d.chartData   || null;
@@ -1188,10 +1176,8 @@ const Dashboard = ({ config, onReset }) => {
                         imported.phases  = d.phases      || null;
                       }
 
-                      // ── Apply what we found ───────────────────────────────
                       let count = 0;
                       if (imported.chart && imported.chart.length) {
-                        // sanitise every data point
                         setChartData(imported.chart.map(p => ({
                           ...p,
                           value: isNaN(parseFloat(p.value)) ? 500 : parseFloat(p.value),
@@ -1200,7 +1186,6 @@ const Dashboard = ({ config, onReset }) => {
                         count++;
                       }
                       if (imported.orders && imported.orders.length) {
-                        // sanitise every order — coerce change & newIndex to numbers
                         setOrderBook(imported.orders.map(o => ({
                           ...o,
                           desc: o.desc || o.description || "Imported entry",
@@ -1230,12 +1215,12 @@ const Dashboard = ({ config, onReset }) => {
                   r.readAsText(f); e.target.value="";
                 }}/>
               </label>
-              <div className="mt-3 bg-[#0a0a0a] border border-[#1a1a1a] rounded-xl p-4">
-                <p className="text-xs text-[#444] font-medium mb-2">📦 Supported import formats</p>
+              <div className="mt-3 bg-[#1a1a1a] border border-[#333] rounded-xl p-4">
+                <p className="text-xs text-[#888] font-medium mb-2">📦 Supported import formats</p>
                 <div className="space-y-1.5">
-                  {[["Nikshep Life Index (old)","Auto-detected & converted","text-green-700"],["MyLife Index v2/v3","Native format — full restore","text-green-700"],].map(([name,desc,c])=>(
+                  {[["Nikshep Life Index (old)","Auto-detected & converted","text-green-500"],["MyLife Index v2/v3","Native format — full restore","text-green-500"],].map(([name,desc,c])=>(
                     <div key={name} className="flex items-center justify-between">
-                      <span className="text-xs text-[#555]">{name}</span>
+                      <span className="text-xs text-[#aaa]">{name}</span>
                       <span className={`text-[10px] ${c}`}>{desc}</span>
                     </div>
                   ))}
@@ -1243,8 +1228,8 @@ const Dashboard = ({ config, onReset }) => {
               </div>
             </Card>
             <Card>
-              <h2 className="font-semibold text-[#e8e8e8] text-sm mb-1 flex items-center gap-2"><AlertTriangle size={15} className="text-red-900"/>Danger Zone</h2>
-              <p className="text-xs text-[#333] mb-4">Permanently delete all your data and start from scratch. This cannot be undone.</p>
+              <h2 className="font-semibold text-white text-sm mb-1 flex items-center gap-2"><AlertTriangle size={15} className="text-red-800"/>Danger Zone</h2>
+              <p className="text-xs text-[#888] mb-4">Permanently delete all your data and start from scratch. This cannot be undone.</p>
               <Btn variant="danger" className="w-full" onClick={()=>{if(window.confirm("This will permanently delete ALL your data. Are you absolutely sure?")){"mli_chart3 mli_orders3 mli_habits3 mli_phases3 mli_skills3 mli_debts3 mli_press3 mli_mood mli_goals mli_ach mli_capsules mli_config3 mli_sectors".split(" ").forEach(k=>localStorage.removeItem(k));onReset();}}}>
                 <Trash2 size={15}/>Reset Everything
               </Btn>
@@ -1254,32 +1239,31 @@ const Dashboard = ({ config, onReset }) => {
 
         {/* ── MORE ─── */}
         {view==="more" && (<>
-          <CreditsCard />
           <div className="flex gap-2 flex-wrap mb-2">
             {[["heatmap","📅 Heatmap"],["achievements","🏆 Achievements"],["capsule","⏰ Time Capsule"],["settings","⚙️ Settings"]].map(([id,l])=>(
-              <button key={id} onClick={()=>setMoreTab(id)} className={`px-4 py-2 rounded-xl text-xs font-medium border transition-all ${moreTab===id?"bg-[#e8e8e8] text-[#080808] border-[#e8e8e8]":"bg-[#0e0e0e] text-[#444] border-[#1e1e1e] hover:border-[#333]"}`}>{l}</button>
+              <button key={id} onClick={()=>setMoreTab(id)} className={`px-4 py-2 rounded-xl text-xs font-medium border transition-all ${moreTab===id?"bg-white text-black border-white":"bg-[#1a1a1a] text-[#aaa] border-[#333] hover:border-[#666]"}`}>{l}</button>
             ))}
           </div>
 
           {moreTab==="heatmap" && (
             <Card>
-              <h2 className="font-semibold text-[#e8e8e8] text-sm flex items-center gap-2 mb-4"><Calendar size={16} className="text-[#333]"/>Activity Heatmap {new Date().getFullYear()}</h2>
+              <h2 className="font-semibold text-white text-sm flex items-center gap-2 mb-4"><Calendar size={16} className="text-[#888]"/>Activity Heatmap {new Date().getFullYear()}</h2>
               <Heatmap orderBook={orderBook}/>
             </Card>
           )}
 
           {moreTab==="achievements" && (
             <Card>
-              <h2 className="font-semibold text-[#e8e8e8] text-sm flex items-center gap-2 mb-4"><Award size={16} className="text-[#333]"/>Achievements</h2>
+              <h2 className="font-semibold text-white text-sm flex items-center gap-2 mb-4"><Award size={16} className="text-[#888]"/>Achievements</h2>
               <div className="grid grid-cols-2 gap-3">
                 {ACHIEVEMENTS.map(a=>{
                   const unlocked=unlockedAch.includes(a.id);
                   return (
-                    <div key={a.id} className={`border rounded-xl p-4 transition-all ${unlocked?"border-[#2a2a2a] bg-[#0e0e0e]":"border-[#141414] bg-[#0a0a0a] opacity-40"}`}>
+                    <div key={a.id} className={`border rounded-xl p-4 transition-all ${unlocked?"border-[#333] bg-[#1a1a1a]":"border-[#222] bg-[#111] opacity-40"}`}>
                       <div className="text-2xl mb-2">{unlocked?a.icon:"🔒"}</div>
-                      <p className="text-xs font-semibold text-[#ccc]">{a.title}</p>
-                      <p className="text-[10px] text-[#333] mt-1">{a.desc}</p>
-                      {unlocked&&<p className="text-[10px] text-green-700 mt-2">✓ Unlocked</p>}
+                      <p className="text-xs font-semibold text-[#eee]">{a.title}</p>
+                      <p className="text-[10px] text-[#888] mt-1">{a.desc}</p>
+                      {unlocked&&<p className="text-[10px] text-green-500 mt-2">✓ Unlocked</p>}
                     </div>
                   );
                 })}
@@ -1289,8 +1273,8 @@ const Dashboard = ({ config, onReset }) => {
 
           {moreTab==="capsule" && (<>
             <Card>
-              <h2 className="font-semibold text-[#e8e8e8] text-sm flex items-center gap-2 mb-4"><Moon size={16} className="text-[#333]"/>Time Capsule</h2>
-              <p className="text-xs text-[#333] mb-4">Write a message to your future self. It unlocks on the date you choose.</p>
+              <h2 className="font-semibold text-white text-sm flex items-center gap-2 mb-4"><Moon size={16} className="text-[#888]"/>Time Capsule</h2>
+              <p className="text-xs text-[#888] mb-4">Write a message to your future self. It unlocks on the date you choose.</p>
               <div className="space-y-3">
                 <Textarea value={capsule.message} onChange={e=>setCapsule(p=>({...p,message:e.target.value}))} placeholder="Dear future me..." className="w-full h-28"/>
                 <Input type="date" min={today()} value={capsule.unlockDate} onChange={e=>setCapsule(p=>({...p,unlockDate:e.target.value}))} className="w-full"/>
@@ -1298,12 +1282,12 @@ const Dashboard = ({ config, onReset }) => {
               </div>
             </Card>
             {timeCapsules.map(c=>(
-              <div key={c.id} className={`border rounded-2xl p-4 ${c.opened?"border-[#141414] opacity-40":"border-[#1e1e1e]"} bg-[#0a0a0a]`}>
+              <div key={c.id} className={`border rounded-2xl p-4 ${c.opened?"border-[#333] opacity-40":"border-[#333]"} bg-[#1a1a1a]`}>
                 <div className="flex justify-between items-start">
-                  <div><p className="text-xs text-[#444]">Unlocks: {c.unlockDate}</p><p className="text-xs text-[#2a2a2a]">Written: {c.createdDate}</p></div>
-                  <button onClick={()=>setTimeCapsules(p=>p.filter(x=>x.id!==c.id))} className="text-[#222] hover:text-red-600"><X size={13}/></button>
+                  <div><p className="text-xs text-[#aaa]">Unlocks: {c.unlockDate}</p><p className="text-xs text-[#666]">Written: {c.createdDate}</p></div>
+                  <button onClick={()=>setTimeCapsules(p=>p.filter(x=>x.id!==c.id))} className="text-[#444] hover:text-red-500"><X size={13}/></button>
                 </div>
-                {(c.opened||c.unlockDate<=today())?<p className="text-sm text-[#666] mt-3 leading-relaxed">{c.message}</p>:<p className="text-xs text-[#222] mt-3">🔒 Sealed until {c.unlockDate}</p>}
+                {(c.opened||c.unlockDate<=today())?<p className="text-sm text-[#ccc] mt-3 leading-relaxed">{c.message}</p>:<p className="text-xs text-[#888] mt-3">🔒 Sealed until {c.unlockDate}</p>}
               </div>
             ))}
           </>)}
@@ -1311,21 +1295,21 @@ const Dashboard = ({ config, onReset }) => {
           {moreTab==="settings" && (
             <div className="space-y-4">
               <Card>
-                <h2 className="font-semibold text-[#e8e8e8] text-sm mb-4">Profile</h2>
+                <h2 className="font-semibold text-white text-sm mb-4">Profile</h2>
                 {[["Name",config.name],["Ticker",`$${ticker}`],["Country",config.country],["Currency",`${curr} · ${CURRENCIES[config.country]?.code}`],["IPO Price",`${curr}${fmt(config.startPrice)}`]].map(([k,v])=>(
-                  <div key={k} className="flex justify-between items-center py-3 border-b border-[#111] last:border-0">
-                    <span className="text-sm text-[#333]">{k}</span><span className="text-sm text-[#888]">{v}</span>
+                  <div key={k} className="flex justify-between items-center py-3 border-b border-[#333] last:border-0">
+                    <span className="text-sm text-[#aaa]">{k}</span><span className="text-sm text-[#eee]">{v}</span>
                   </div>
                 ))}
               </Card>
               <Card>
-                <h2 className="font-semibold text-[#e8e8e8] text-sm mb-4">Data</h2>
+                <h2 className="font-semibold text-white text-sm mb-4">Data</h2>
                 <div className="space-y-2">
                   <Btn variant="ghost" className="w-full" onClick={()=>{
                     const blob=new Blob([JSON.stringify({config,chartData,orderBook,habits,phases,skills,weaknesses,pressReleases,moodLog,goals,timeCapsules},null,2)],{type:"application/json"});
                     const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download=`mylife-index-${today()}.json`;document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);
                   }}><Download size={15}/>Export All Data</Btn>
-                  <label className={`w-full px-4 py-2.5 rounded-xl font-medium text-sm transition-all flex items-center justify-center gap-2 bg-[#161616] border border-[#1e1e1e] text-[#888] hover:bg-[#1a1a1a] hover:text-[#e8e8e8] cursor-pointer`}>
+                  <label className={`w-full px-4 py-2.5 rounded-xl font-medium text-sm transition-all flex items-center justify-center gap-2 bg-[#1a1a1a] border border-[#333] text-[#aaa] hover:bg-[#222] hover:text-white cursor-pointer`}>
                     <Upload size={15}/>Import Data
                     <input type="file" accept=".json" className="hidden" onChange={e=>{
                       const f=e.target.files[0];if(!f) return;
@@ -1337,6 +1321,12 @@ const Dashboard = ({ config, onReset }) => {
               </Card>
             </div>
           )}
+
+          {/* ADDED: Bento Credits Card at bottom of More tab */}
+          <div className="pt-4">
+             <CreditsCard />
+          </div>
+
         </>)}
 
       </div>
@@ -1445,9 +1435,9 @@ export default function App() {
       <Onboarding key={key} onComplete={finish}/>
       {/* floating import button on welcome screen */}
       <div className="fixed bottom-8 left-0 right-0 flex justify-center z-50 px-6">
-        <div className="bg-[#111] border border-[#1e1e1e] rounded-2xl px-5 py-4 flex flex-col items-center gap-3 shadow-2xl w-full max-w-sm">
-          <p className="text-xs text-[#444] text-center">Already have a backup? Skip onboarding.</p>
-          <label className={`w-full flex items-center justify-center gap-2 px-5 py-3 rounded-xl border border-[#2a2a2a] bg-[#161616] text-[#888] hover:text-[#ccc] hover:border-[#333] text-sm font-medium transition-all cursor-pointer ${importing?"opacity-50 cursor-wait":""}`}>
+        <div className="bg-[#111] border border-[#333] rounded-2xl px-5 py-4 flex flex-col items-center gap-3 shadow-2xl w-full max-w-sm">
+          <p className="text-xs text-[#888] text-center">Already have a backup? Skip onboarding.</p>
+          <label className={`w-full flex items-center justify-center gap-2 px-5 py-3 rounded-xl border border-[#333] bg-[#1a1a1a] text-[#aaa] hover:text-white hover:border-[#666] text-sm font-medium transition-all cursor-pointer ${importing?"opacity-50 cursor-wait":""}`}>
             <Upload size={16}/>{importing ? "Importing…" : "Import & Restore Backup"}
             <input type="file" accept=".json" className="hidden" onChange={handleDirectImport} disabled={importing}/>
           </label>
