@@ -31,6 +31,7 @@ const TREND_OPTIONS = [
   { label: "Flat ➡️", value: 0 }, { label: "Declining 📉", value: -1.2 },
   { label: "Crashing 🔻", value: -2.5 },
 ];
+
 const EMOJIS = ["📅","🏫","🎓","💼","❤️","🌍","🏠","⚡","🌱","🔥","🏆","💔","🎯","🌙","⛈️"];
 const COLORS = ["#a3a3a3","#60a5fa","#34d399","#f59e0b","#f87171","#c084fc","#fb923c","#e2e8f0"];
 const SKILL_LEVELS = ["Beginner","Developing","Proficient","Advanced","Expert"];
@@ -45,6 +46,7 @@ const classifyHabit = (name) => {
   if (/(code|program|design|build|project|skill|practice|draw|paint|music|instrument|write|blog|create|craft|develop|tool|language|chess|hobby)/.test(n)) return "skills";
   return "health"; // default
 };
+
 const DEBT_SEVERITY = ["Minor","Moderate","Significant","Critical"];
 const ACHIEVEMENTS = [
   { id: "first_log", icon: "🌱", title: "First Step", desc: "Log your first habit", check: (o) => o.length >= 1 },
@@ -78,7 +80,7 @@ const generateFromPhases = (phases, startPrice, dob) => {
       else if (age < 13) trend = 0.02;                   // pre-teen — slowing
       else if (age < 15) trend = -0.05;                  // early teen — common dip
       else if (age < 17) trend = 0.04;                   // mid teen — recovery
-      else trend = 0.06;                                  // late teen / adult — growth
+      else trend = 0.06;                                 // late teen / adult — growth
       v = Math.max(10, v + trend + (Math.random() - 0.5) * 2);
       data.push({ date: d.toISOString().split("T")[0], value: parseFloat(v.toFixed(2)), timestamp: d.getTime() });
       d.setDate(d.getDate() + 1);
@@ -144,6 +146,36 @@ const Btn = ({ children, variant = "primary", className = "", ...props }) => {
   return <button className={`px-4 py-2.5 rounded-xl font-medium text-sm transition-all flex items-center justify-center gap-2 ${variants[variant]} ${className}`} {...props}>{children}</button>;
 };
 
+// ── Bento Credits Card ────────────────────────────────────────────────────────
+const CreditsCard = () => (
+  <div className="bg-[#0a0a0a] border border-[#161616] rounded-3xl p-6 flex flex-col justify-between hover:border-[#222] transition-all group relative overflow-hidden h-40 mb-4">
+    {/* Minimalist Background Detail */}
+    <div className="absolute -right-6 -top-6 w-32 h-32 bg-white/[0.02] blur-3xl rounded-full group-hover:bg-white/[0.05] transition-all" />
+    
+    <div className="flex flex-col gap-1 z-10">
+      <p className="text-[10px] text-[#444] uppercase tracking-[0.3em] font-bold">Systems Architect</p>
+      <h3 className="text-xl font-medium text-[#e8e8e8] tracking-tight">Nikshep Doggalli</h3>
+    </div>
+
+    <div className="mt-auto flex items-center justify-between z-10">
+      <a 
+        href="https://instagram.com/nikkk.exe" 
+        target="_blank" 
+        rel="noopener noreferrer"
+        className="flex items-center gap-2.5 text-sm text-[#888] hover:text-white transition-all"
+      >
+        <div className="p-2 bg-[#111] rounded-xl border border-[#1e1e1e] group-hover:border-[#333]">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+        </div>
+        <span className="font-mono tracking-tighter">@nikkk.exe</span>
+      </a>
+      <div className="opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all text-[#444]">
+        <ChevronRight size={18} />
+      </div>
+    </div>
+  </div>
+);
+
 // ── Onboarding ────────────────────────────────────────────────────────────────
 const STEPS = ["Welcome","Profile","Country","Price","Life Story","Habits","Review"];
 
@@ -189,7 +221,7 @@ const Onboarding = ({ onComplete }) => {
     <Shell step={0} onNext={n} nextLabel="Begin">
       <div className="text-center">
         <div className="w-16 h-16 bg-[#161616] border border-[#222] rounded-2xl flex items-center justify-center mx-auto mb-6 text-3xl">📈</div>
-        <h1 className="text-3xl font-semibold text-[#e8e8e8] mb-3 tracking-tight">MyLife Index</h1>
+        <h1 className="text-3xl font-semibold text-[#e8e8e8] mb-3 tracking-tight">EntropyZero</h1>
         <p className="text-[#555] text-sm leading-relaxed mb-8">Your life, quantified like a stock market. Track every phase, habit, skill and emotion — watch your personal index grow.</p>
         <div className="grid grid-cols-3 gap-3">
           {[["📊","Index Chart"],["🧠","AI Coach"],["💎","Assets"]].map(([e,l]) => (
@@ -380,7 +412,6 @@ const Heatmap = ({ orderBook }) => {
     }
     return ms;
   }, [days, year]);
-
   const getColor = (cell) => {
     if (!cell) return "transparent";
     if (!cell.logged) return "#111";
@@ -423,7 +454,6 @@ const AICoach = ({ config, lifeIndex, orderBook, skills, weaknesses, phases, hab
   const [messages, setMessages] = useState([{ role:"assistant", content:`Hey ${config.name}! I'm your AI Life Coach. I have full context on your index (currently at ${fmt(lifeIndex)}), your ${phases.length} life phases, ${skills.length} skills, ${weaknesses.length} weaknesses and ${orderBook.length} logged events. Ask me anything about your life data, patterns, or what to focus on next.` }]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
-
   const send = async () => {
     if (!input.trim() || loading) return;
     const userMsg = { role: "user", content: input };
@@ -431,16 +461,18 @@ const AICoach = ({ config, lifeIndex, orderBook, skills, weaknesses, phases, hab
     setInput("");
     setLoading(true);
     try {
-      const context = `You are an elite life coach AI embedded in MyLife Index app. Be concise, insightful, and data-driven. The user's data:
-- Name: ${config.name}, Country: ${config.country}
-- IPO Price: ${config.startPrice}, Current Index: ${fmt(lifeIndex)}
-- All-time change: ${fmt(((lifeIndex-config.startPrice)/config.startPrice)*100)}%
-- Life phases: ${phases.map(p=>`${p.name} (${p.start}–${p.end||"now"}): ${TREND_OPTIONS.find(t=>t.value===p.trend)?.label}`).join(", ")||"none"}
-- Skills: ${skills.map(s=>`${s.name} (${SKILL_LEVELS[s.level]})`).join(", ")||"none"}
-- Weaknesses: ${weaknesses.map(w=>`${w.name} (${DEBT_SEVERITY[w.severity]})`).join(", ")||"none"}
-- Active habits: ${habits.map(h=>`${h.name} (${h.impact>0?"+":""}${h.impact}%)`).join(", ")||"none"}
-- Recent transactions (last 10): ${orderBook.slice(0,10).map(o=>`${o.desc}: ${o.change>0?"+":""}${fmt(o.change)}%`).join(", ")||"none"}
-Give sharp, personalised advice. Reference their actual data. Keep responses under 200 words.`;
+      const context = `You are an elite life coach AI embedded in MyLife Index app.
+      Be concise, insightful, and data-driven. The user's data:
+      - Name: ${config.name}, Country: ${config.country}
+      - IPO Price: ${config.startPrice}, Current Index: ${fmt(lifeIndex)}
+      - All-time change: ${fmt(((lifeIndex-config.startPrice)/config.startPrice)*100)}%
+      - Life phases: ${phases.map(p=>`${p.name} (${p.start}–${p.end||"now"}): ${TREND_OPTIONS.find(t=>t.value===p.trend)?.label}`).join(", ")||"none"}
+      - Skills: ${skills.map(s=>`${s.name} (${SKILL_LEVELS[s.level]})`).join(", ")||"none"}
+      - Weaknesses: ${weaknesses.map(w=>`${w.name} (${DEBT_SEVERITY[w.severity]})`).join(", ")||"none"}
+      - Active habits: ${habits.map(h=>`${h.name} (${h.impact>0?"+":""}${h.impact}%)`).join(", ")||"none"}
+      - Recent transactions (last 10): ${orderBook.slice(0,10).map(o=>`${o.desc}: ${o.change>0?"+":""}${fmt(o.change)}%`).join(", ")||"none"}
+      Give sharp, personalised advice.
+      Reference their actual data. Keep responses under 200 words.`;
 
       const resp = await fetch("https://api.anthropic.com/v1/messages", {
         method:"POST",
@@ -556,7 +588,7 @@ const Dashboard = ({ config, onReset }) => {
   // sector scores based on habits logged
   const sectorScores = useMemo(()=>{
     const scores = Object.fromEntries(SECTORS.map(s=>[s.id,50]));
-    orderBook.slice(0,50).forEach(o=>{                     const h=habits.find(h=>h.name===o.desc||(o.desc&&o.desc.includes(h.name))); if(h?.sector){ scores[h.sector]=Math.min(100,Math.max(0,(scores[h.sector]||50)+(o.change>0?5:-5))); } });
+    orderBook.slice(0,50).forEach(o=>{ const h=habits.find(h=>h.name===o.desc||(o.desc&&o.desc.includes(h.name))); if(h?.sector){ scores[h.sector]=Math.min(100,Math.max(0,(scores[h.sector]||50)+(o.change>0?5:-5))); } });
     skills.forEach(sk=>{ if(scores[sk.sector]!==undefined) scores[sk.sector]=Math.min(100,scores[sk.sector]+(sk.level+1)*4); });
     return scores;
   },[orderBook,habits,skills]);
@@ -652,8 +684,12 @@ const Dashboard = ({ config, onReset }) => {
       <div className={`border-b border-[#141414] px-5 py-4 flex items-center justify-between sticky top-0 ${C.bg}/95 backdrop-blur z-20`}>
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 bg-[#111] border border-[#1e1e1e] rounded-xl flex items-center justify-center text-base">📈</div>
-          <div><p className="font-semibold text-[#e8e8e8] text-sm leading-none">{config.name}</p>
-            <p className="text-xs text-[#333] font-mono">${ticker} · {CURRENCIES[config.country]?.code}</p></div>
+          <div>
+            <h1 className="text-lg font-medium tracking-tighter text-[#e8e8e8]">
+              ENTROPY<span className="text-[#444]">ZERO</span>
+            </h1>
+            <p className="text-[10px] text-[#444] uppercase tracking-[0.2em] font-bold">${ticker}</p>
+          </div>
         </div>
         <div className="text-right">
           <p className="text-xl font-semibold text-[#e8e8e8] font-mono">{curr}{fmt(lifeIndex)}</p>
@@ -1062,18 +1098,17 @@ const Dashboard = ({ config, onReset }) => {
               <label className="w-full px-4 py-2.5 rounded-xl font-medium text-sm transition-all flex items-center justify-center gap-2 bg-[#161616] border border-[#1e1e1e] text-[#888] hover:bg-[#1a1a1a] hover:text-[#e8e8e8] cursor-pointer">
                 <Upload size={15}/>Choose Backup File (.json)
                 <input type="file" accept=".json" className="hidden" onChange={e=>{
-                  const f=e.target.files[0]; if(!f) return;
+                  const f=e.target.files[0];
+                  if(!f) return;
                   const r=new FileReader();
                   r.onload=ev=>{
                     try {
                       const d=JSON.parse(ev.target.result);
                       let imported = { chart: null, orders: null, habits: null, phases: null, format: "unknown" };
-
                       // ── Detect OLD Nikshep Life Index format ──────────────
                       // Old app saved as: { lifeIndex, chartData, orderBook, habits, majorEventUsed, timestamp }
                       if (d.chartData && d.orderBook !== undefined && !d.version) {
                         imported.format = "nikshep-v1";
-
                         // Convert chartData: old = [{date, value, timestamp}] — same shape, just remap
                         if (Array.isArray(d.chartData)) {
                           imported.chart = d.chartData.map(p => ({
@@ -1174,15 +1209,14 @@ const Dashboard = ({ config, onReset }) => {
                         })));
                         count++;
                       }
-                      if (imported.habits  && imported.habits.length)  { setHabits(imported.habits);     count++; }
-                      if (imported.phases  && imported.phases.length)  { setPhases(imported.phases);     count++; }
+                      if (imported.habits  && imported.habits.length)  { setHabits(imported.habits); count++; }
+                      if (imported.phases  && imported.phases.length)  { setPhases(imported.phases); count++; }
                       if (d.skills)         setSkills(d.skills);
                       if (d.weaknesses)     setWeaknesses(d.weaknesses);
                       if (d.pressReleases)  setPressReleases(d.pressReleases);
                       if (d.moodLog)        setMoodLog(d.moodLog);
                       if (d.goals)          setGoals(d.goals);
                       if (d.timeCapsules)   setTimeCapsules(d.timeCapsules);
-
                       if (count === 0) {
                         alert("⚠️ File was read but no recognisable data was found. Make sure it's a Nikshep Life or MyLife Index export.");
                       } else {
@@ -1220,6 +1254,7 @@ const Dashboard = ({ config, onReset }) => {
 
         {/* ── MORE ─── */}
         {view==="more" && (<>
+          <CreditsCard />
           <div className="flex gap-2 flex-wrap mb-2">
             {[["heatmap","📅 Heatmap"],["achievements","🏆 Achievements"],["capsule","⏰ Time Capsule"],["settings","⚙️ Settings"]].map(([id,l])=>(
               <button key={id} onClick={()=>setMoreTab(id)} className={`px-4 py-2 rounded-xl text-xs font-medium border transition-all ${moreTab===id?"bg-[#e8e8e8] text-[#080808] border-[#e8e8e8]":"bg-[#0e0e0e] text-[#444] border-[#1e1e1e] hover:border-[#333]"}`}>{l}</button>
@@ -1324,7 +1359,6 @@ export default function App() {
     r.onload = ev => {
       try {
         const d = JSON.parse(ev.target.result);
-
         // pull config from export or reconstruct from old nikshep format
         let cfg = d.config || null;
         if (!cfg && d.lifeIndex !== undefined) {
@@ -1339,11 +1373,11 @@ export default function App() {
             habits: [],
           };
         }
-        if (!cfg) { alert("❌ Could not find profile data in this file."); setImporting(false); return; }
+        if (!cfg) { alert("❌ Could not find profile data in this file.");
+        setImporting(false); return; }
 
         // save config
         save("mli_config3", cfg);
-
         // migrate chart
         if (Array.isArray(d.chartData)) {
           save("mli_chart3", d.chartData.map(p => ({
