@@ -128,6 +128,41 @@ const generateFromPhases = (phases, startPrice, dob) => {
   return data;
 };
 
+// ── Builder Footer Card ────────────────────────────────────────────────────────
+const BuilderCard = () => (
+  <div className="w-full max-w-3xl mx-auto px-4 pb-6 pt-2">
+    <div className="relative rounded-2xl p-px overflow-hidden"
+      style={{background:"linear-gradient(135deg,#b8860b,#ffd700,#daa520,#f5c518,#b8860b)"}}>
+      <div className="rounded-2xl bg-[#0d0c08] px-5 py-4 flex items-center justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <div className="text-2xl">🥷</div>
+          <div>
+            <p className="text-[10px] uppercase tracking-widest font-semibold mb-0.5"
+              style={{background:"linear-gradient(90deg,#ffd700,#daa520,#f5c518)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>
+              Builder
+            </p>
+            <p className="text-sm font-semibold text-[#e8d9a0]">Nikshep Doggalli</p>
+          </div>
+        </div>
+        <div className="flex items-center gap-3 text-right">
+          <div className="space-y-1">
+            <a href="https://instagram.com/nikkk.exe" target="_blank" rel="noreferrer"
+              className="flex items-center gap-1.5 text-[10px] text-[#a0906a] hover:text-[#ffd700] transition-colors justify-end">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+              nikkk.exe
+            </a>
+            <a href="https://nikshep.vercel.app" target="_blank" rel="noreferrer"
+              className="flex items-center gap-1.5 text-[10px] text-[#a0906a] hover:text-[#ffd700] transition-colors justify-end">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+              nikshep.vercel.app
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
 // ── design tokens ──────────────────────────────────────────────────────────────
 const C = {
   bg:"bg-[#080808]", card:"bg-[#111111]", border:"border-[#1e1e1e]",
@@ -217,37 +252,9 @@ const GoogleLoginScreen = ({ onLogin }) => {
           </div>
         </div>
 
-        {/* builder card */}
-        <div className="mt-4 bg-[#0a0a0a] border border-[#1a1a1a] rounded-2xl px-5 py-4 flex items-center justify-between">
-          <div>
-            <p className="text-[10px] text-[#333] uppercase tracking-wider mb-1">Builder 🥷</p>
-            <p className="text-sm font-medium text-[#777]">Nikshep Doggalli</p>
-            <div className="flex gap-3 mt-1">
-              <a href="https://instagram.com/nikkk.exe" target="_blank" rel="noreferrer" className="text-[10px] text-[#444] hover:text-[#888] transition-colors">@nikkk.exe</a>
-              <span className="text-[#222]">·</span>
-              <a href="https://nikshep.vercel.app" target="_blank" rel="noreferrer" className="text-[10px] text-[#444] hover:text-[#888] transition-colors">nikshep.vercel.app</a>
-            </div>
-          </div>
-          <div className="text-2xl">🥷</div>
-        </div>
-        <p className="text-center text-[#2a2a2a] text-[10px] mt-4">By signing in you agree to keep it real 📈</p>
+        <p className="text-center text-[#2a2a2a] text-[10px]">By signing in you agree to keep it real 📈</p>
       </div>
-
-      {/* sticky footer */}
-      <div className="border-t border-[#0e0e0e] bg-[#080808] px-5 py-3 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <span className="text-base">🥷</span>
-          <div>
-            <p className="text-[10px] text-[#2a2a2a] leading-none">Builder</p>
-            <p className="text-xs text-[#3a3a3a] font-medium">Nikshep Doggalli</p>
-          </div>
-        </div>
-        <div className="flex gap-3">
-          <a href="https://instagram.com/nikkk.exe" target="_blank" rel="noreferrer" className="text-[10px] text-[#2a2a2a] hover:text-[#666] transition-colors">@nikkk.exe</a>
-          <span className="text-[#1a1a1a]">·</span>
-          <a href="https://nikshep.vercel.app" target="_blank" rel="noreferrer" className="text-[10px] text-[#2a2a2a] hover:text-[#666] transition-colors">nikshep.vercel.app</a>
-        </div>
-      </div>
+      <BuilderCard />
     </div>
   );
 };
@@ -274,6 +281,7 @@ const Shell = ({step,children,onNext,onBack,nextLabel="Continue",nextDisabled=fa
           <Btn onClick={onNext} disabled={nextDisabled} className={`flex-1 ${nextDisabled?"opacity-30 cursor-not-allowed":""}`}>{nextLabel}<ChevronRight size={15}/></Btn>
         </div>
       </Card>
+      <BuilderCard />
     </div>
   </div>
 );
@@ -726,7 +734,7 @@ const Dashboard=({config,onReset,user,onSignOut})=>{
         ))}
       </div>
 
-      <div className="max-w-3xl mx-auto p-4 pb-20 space-y-4">
+      <div className="max-w-3xl mx-auto p-4 pb-6 space-y-4">
 
         {/* INDEX */}
         {view==="chart"&&(<>
@@ -1134,22 +1142,10 @@ const Dashboard=({config,onReset,user,onSignOut})=>{
               <p className="text-xs text-[#333] mb-4">Permanently delete all data and start from scratch.</p>
               <Btn variant="danger" className="w-full" onClick={()=>{if(window.confirm("Reset ALL data? Cannot be undone.")){"mli_chart3 mli_orders3 mli_habits3 mli_phases3 mli_skills3 mli_debts3 mli_press3 mli_mood mli_goals mli_ach mli_capsules mli_config3 mli_sectors".split(" ").forEach(k=>localStorage.removeItem(k));onReset();}}}><Trash2 size={15}/>Reset Everything</Btn>
             </Card>
-            {/* builder card */}
-            <div className="bg-[#0e0e0e] border border-[#1a1a1a] rounded-2xl px-5 py-4 flex items-center justify-between">
-              <div>
-                <p className="text-[10px] text-[#2a2a2a] uppercase tracking-wider mb-1">Builder 🥷</p>
-                <p className="text-sm font-medium text-[#666]">Nikshep Doggalli</p>
-                <div className="flex gap-3 mt-1">
-                  <a href="https://instagram.com/nikkk.exe" target="_blank" rel="noreferrer" className="text-[10px] text-[#444] hover:text-[#888] transition-colors">@nikkk.exe</a>
-                  <span className="text-[#222]">·</span>
-                  <a href="https://nikshep.vercel.app" target="_blank" rel="noreferrer" className="text-[10px] text-[#444] hover:text-[#888] transition-colors">nikshep.vercel.app</a>
-                </div>
-              </div>
-              <span className="text-2xl">🥷</span>
-            </div>
           </div>
         )}
       </div>
+      <BuilderCard />
     </div>
   );
 };
