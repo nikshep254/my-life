@@ -217,7 +217,36 @@ const GoogleLoginScreen = ({ onLogin }) => {
           </div>
         </div>
 
-        <p className="text-center text-[#2a2a2a] text-[10px]">By signing in you agree to keep it real 📈</p>
+        {/* builder card */}
+        <div className="mt-4 bg-[#0a0a0a] border border-[#1a1a1a] rounded-2xl px-5 py-4 flex items-center justify-between">
+          <div>
+            <p className="text-[10px] text-[#333] uppercase tracking-wider mb-1">Builder 🥷</p>
+            <p className="text-sm font-medium text-[#777]">Nikshep Doggalli</p>
+            <div className="flex gap-3 mt-1">
+              <a href="https://instagram.com/nikkk.exe" target="_blank" rel="noreferrer" className="text-[10px] text-[#444] hover:text-[#888] transition-colors">@nikkk.exe</a>
+              <span className="text-[#222]">·</span>
+              <a href="https://nikshep.vercel.app" target="_blank" rel="noreferrer" className="text-[10px] text-[#444] hover:text-[#888] transition-colors">nikshep.vercel.app</a>
+            </div>
+          </div>
+          <div className="text-2xl">🥷</div>
+        </div>
+        <p className="text-center text-[#2a2a2a] text-[10px] mt-4">By signing in you agree to keep it real 📈</p>
+      </div>
+
+      {/* sticky footer */}
+      <div className="border-t border-[#0e0e0e] bg-[#080808] px-5 py-3 flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <span className="text-base">🥷</span>
+          <div>
+            <p className="text-[10px] text-[#2a2a2a] leading-none">Builder</p>
+            <p className="text-xs text-[#3a3a3a] font-medium">Nikshep Doggalli</p>
+          </div>
+        </div>
+        <div className="flex gap-3">
+          <a href="https://instagram.com/nikkk.exe" target="_blank" rel="noreferrer" className="text-[10px] text-[#2a2a2a] hover:text-[#666] transition-colors">@nikkk.exe</a>
+          <span className="text-[#1a1a1a]">·</span>
+          <a href="https://nikshep.vercel.app" target="_blank" rel="noreferrer" className="text-[10px] text-[#2a2a2a] hover:text-[#666] transition-colors">nikshep.vercel.app</a>
+        </div>
       </div>
     </div>
   );
@@ -1105,6 +1134,19 @@ const Dashboard=({config,onReset,user,onSignOut})=>{
               <p className="text-xs text-[#333] mb-4">Permanently delete all data and start from scratch.</p>
               <Btn variant="danger" className="w-full" onClick={()=>{if(window.confirm("Reset ALL data? Cannot be undone.")){"mli_chart3 mli_orders3 mli_habits3 mli_phases3 mli_skills3 mli_debts3 mli_press3 mli_mood mli_goals mli_ach mli_capsules mli_config3 mli_sectors".split(" ").forEach(k=>localStorage.removeItem(k));onReset();}}}><Trash2 size={15}/>Reset Everything</Btn>
             </Card>
+            {/* builder card */}
+            <div className="bg-[#0e0e0e] border border-[#1a1a1a] rounded-2xl px-5 py-4 flex items-center justify-between">
+              <div>
+                <p className="text-[10px] text-[#2a2a2a] uppercase tracking-wider mb-1">Builder 🥷</p>
+                <p className="text-sm font-medium text-[#666]">Nikshep Doggalli</p>
+                <div className="flex gap-3 mt-1">
+                  <a href="https://instagram.com/nikkk.exe" target="_blank" rel="noreferrer" className="text-[10px] text-[#444] hover:text-[#888] transition-colors">@nikkk.exe</a>
+                  <span className="text-[#222]">·</span>
+                  <a href="https://nikshep.vercel.app" target="_blank" rel="noreferrer" className="text-[10px] text-[#444] hover:text-[#888] transition-colors">nikshep.vercel.app</a>
+                </div>
+              </div>
+              <span className="text-2xl">🥷</span>
+            </div>
           </div>
         )}
       </div>
