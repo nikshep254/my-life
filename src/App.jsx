@@ -165,15 +165,15 @@ const BuilderCard = () => (
 
 // ── design tokens ──────────────────────────────────────────────────────────────
 const C = {
-  bg:"bg-[#080808]", card:"bg-[#111111]", border:"border-[#1e1e1e]",
-  text:"text-[#e8e8e8]", muted:"text-[#555]",
-  input:"bg-[#0e0e0e] border-[#1e1e1e]",
+  bg:"bg-[#080808]", card:"bg-[#111111]", border:"border-[#252525]",
+  text:"text-[#f0f0f0]", muted:"text-[#888]",
+  input:"bg-[#141414] border-[#252525]",
 };
 const Card = ({children,className=""}) => <div className={`${C.card} border ${C.border} rounded-2xl p-5 ${className}`}>{children}</div>;
-const Input = ({className="",...p}) => <input className={`${C.input} border rounded-xl px-4 py-2.5 text-[#e8e8e8] placeholder-[#333] focus:outline-none focus:border-[#333] text-sm transition-all ${className}`} {...p}/>;
-const Textarea = ({className="",...p}) => <textarea className={`${C.input} border rounded-xl px-4 py-2.5 text-[#e8e8e8] placeholder-[#333] focus:outline-none focus:border-[#333] text-sm resize-none transition-all ${className}`} {...p}/>;
+const Input = ({className="",...p}) => <input className={`${C.input} border rounded-xl px-4 py-2.5 text-[#f0f0f0] placeholder-[#444] focus:outline-none focus:border-[#555] text-sm transition-all ${className}`} {...p}/>;
+const Textarea = ({className="",...p}) => <textarea className={`${C.input} border rounded-xl px-4 py-2.5 text-[#f0f0f0] placeholder-[#444] focus:outline-none focus:border-[#555] text-sm resize-none transition-all ${className}`} {...p}/>;
 const Btn = ({children,variant="primary",className="",...p}) => {
-  const v = { primary:"bg-[#e8e8e8] text-[#080808] hover:bg-[#d0d0d0]", ghost:"bg-[#161616] border border-[#1e1e1e] text-[#888] hover:bg-[#1a1a1a] hover:text-[#e8e8e8]", danger:"bg-[#1a0808] border border-[#3a1010] text-[#f87171] hover:bg-[#200a0a]", success:"bg-[#0a1a12] border border-[#1a4d2e] text-[#34d399] hover:bg-[#0d2018]" };
+  const v = { primary:"bg-[#f0f0f0] text-[#080808] hover:bg-[#d8d8d8]", ghost:"bg-[#1a1a1a] border border-[#252525] text-[#aaa] hover:bg-[#202020] hover:text-[#f0f0f0]", danger:"bg-[#1a0808] border border-[#3a1010] text-[#f87171] hover:bg-[#200a0a]", success:"bg-[#0a1a12] border border-[#1a4d2e] text-[#4ade80] hover:bg-[#0d2018]" };
   return <button className={`px-4 py-2.5 rounded-xl font-medium text-sm transition-all flex items-center justify-center gap-2 ${v[variant]} ${className}`} {...p}>{children}</button>;
 };
 
@@ -195,47 +195,46 @@ const GoogleLoginScreen = ({ onLogin }) => {
   };
 
   return (
-    <div className={`min-h-screen ${C.bg} flex flex-col items-center justify-center p-6`}>
+    <div className="min-h-screen bg-[#080808] flex flex-col items-center justify-center p-6">
       <div className="w-full max-w-sm">
         {/* logo */}
         <div className="text-center mb-10">
-          <div className="w-16 h-16 bg-[#111] border border-[#1e1e1e] rounded-2xl flex items-center justify-center mx-auto mb-5 text-3xl">📈</div>
-          <h1 className="text-3xl font-semibold text-[#e8e8e8] tracking-tight">MyLife Index</h1>
-          <p className="text-[#444] text-sm mt-2">Your life, quantified.</p>
+          <div className="w-16 h-16 bg-[#141414] border border-[#252525] rounded-2xl flex items-center justify-center mx-auto mb-5 text-3xl">📈</div>
+          <h1 className="text-3xl font-semibold text-[#f0f0f0] tracking-tight">MyLife Index</h1>
+          <p className="text-[#777] text-sm mt-2">Your life, quantified.</p>
         </div>
-
         {/* bento grid */}
         <div className="grid grid-cols-2 gap-3 mb-6">
-          <div className="bg-[#0e0e0e] border border-[#1a1a1a] rounded-2xl p-4 col-span-2">
+          <div className="bg-[#141414] border border-[#252525] rounded-2xl p-4 col-span-2">
             <p className="text-2xl mb-2">📊</p>
-            <p className="text-[#ccc] text-sm font-medium">Life as a Stock</p>
-            <p className="text-[#444] text-xs mt-1 leading-relaxed">Track every habit, event and emotion. Watch your personal index chart grow over time.</p>
+            <p className="text-[#e8e8e8] text-sm font-medium">Life as a Stock</p>
+            <p className="text-[#777] text-xs mt-1 leading-relaxed">Track every habit, event and emotion. Watch your personal index chart grow over time.</p>
           </div>
-          <div className="bg-[#0e0e0e] border border-[#1a1a1a] rounded-2xl p-4">
+          <div className="bg-[#141414] border border-[#252525] rounded-2xl p-4">
             <p className="text-2xl mb-2">🧠</p>
-            <p className="text-[#ccc] text-xs font-medium">AI Coach</p>
-            <p className="text-[#444] text-[10px] mt-1 leading-relaxed">Personalised insights from your real data.</p>
+            <p className="text-[#e8e8e8] text-xs font-medium">AI Coach</p>
+            <p className="text-[#777] text-[10px] mt-1 leading-relaxed">Personalised insights from your real data.</p>
           </div>
-          <div className="bg-[#0e0e0e] border border-[#1a1a1a] rounded-2xl p-4">
+          <div className="bg-[#141414] border border-[#252525] rounded-2xl p-4">
             <p className="text-2xl mb-2">💎</p>
-            <p className="text-[#ccc] text-xs font-medium">Skills & Debt</p>
-            <p className="text-[#444] text-[10px] mt-1 leading-relaxed">Assets, weaknesses, goals — all on one balance sheet.</p>
+            <p className="text-[#e8e8e8] text-xs font-medium">Skills & Debt</p>
+            <p className="text-[#777] text-[10px] mt-1 leading-relaxed">Assets, weaknesses, goals — all on one balance sheet.</p>
           </div>
-          <div className="bg-[#0e0e0e] border border-[#1a1a1a] rounded-2xl p-4">
+          <div className="bg-[#141414] border border-[#252525] rounded-2xl p-4">
             <p className="text-2xl mb-2">🗂️</p>
-            <p className="text-[#ccc] text-xs font-medium">Life Phases</p>
-            <p className="text-[#444] text-[10px] mt-1 leading-relaxed">Map your chapters. Shape your chart.</p>
+            <p className="text-[#e8e8e8] text-xs font-medium">Life Phases</p>
+            <p className="text-[#777] text-[10px] mt-1 leading-relaxed">Map your chapters. Shape your chart.</p>
           </div>
-          <div className="bg-[#0e0e0e] border border-[#1a1a1a] rounded-2xl p-4">
+          <div className="bg-[#141414] border border-[#252525] rounded-2xl p-4">
             <p className="text-2xl mb-2">📰</p>
-            <p className="text-[#ccc] text-xs font-medium">Press Releases</p>
-            <p className="text-[#444] text-[10px] mt-1 leading-relaxed">Log your thoughts. Move the market.</p>
+            <p className="text-[#e8e8e8] text-xs font-medium">Press Releases</p>
+            <p className="text-[#777] text-[10px] mt-1 leading-relaxed">Log your thoughts. Move the market.</p>
           </div>
-          {/* Google login bento — last card, full width */}
-          <div className="col-span-2 bg-[#0e0e0e] border border-[#222] rounded-2xl p-5">
-            <p className="text-[#555] text-xs mb-4 text-center leading-relaxed">Your data is private and tied to your Google account. Sign in to begin — or restore a backup right after.</p>
+          {/* Google login bento */}
+          <div className="col-span-2 bg-[#141414] border border-[#2a2a2a] rounded-2xl p-5">
+            <p className="text-[#777] text-xs mb-4 text-center leading-relaxed">Your data is private and tied to your Google account. Sign in to begin — or restore a backup right after.</p>
             <button onClick={handleGoogle} disabled={loading}
-              className="w-full flex items-center justify-center gap-3 bg-[#161616] border border-[#2a2a2a] hover:border-[#444] hover:bg-[#1a1a1a] text-[#ccc] rounded-xl py-3.5 font-medium text-sm transition-all disabled:opacity-40 disabled:cursor-wait">
+              className="w-full flex items-center justify-center gap-3 bg-[#1a1a1a] border border-[#333] hover:border-[#555] hover:bg-[#202020] text-[#d8d8d8] rounded-xl py-3.5 font-medium text-sm transition-all disabled:opacity-40 disabled:cursor-wait">
               {loading ? (
                 <span className="w-4 h-4 border border-[#555] border-t-[#ccc] rounded-full animate-spin"/>
               ) : (
@@ -248,11 +247,10 @@ const GoogleLoginScreen = ({ onLogin }) => {
               )}
               {loading ? "Signing in…" : "Continue with Google"}
             </button>
-            {error && <p className="text-red-500 text-xs text-center mt-3">{error}</p>}
+            {error && <p className="text-red-400 text-xs text-center mt-3">{error}</p>}
           </div>
         </div>
-
-        <p className="text-center text-[#2a2a2a] text-[10px]">By signing in you agree to keep it real 📈</p>
+        <p className="text-center text-[#444] text-[10px]">By signing in you agree to keep it real 📈</p>
       </div>
       <BuilderCard />
     </div>
@@ -1228,7 +1226,7 @@ export default function App() {
   // loading state
   if(user===undefined) return(
     <div className="min-h-screen bg-[#080808] flex items-center justify-center">
-      <div className="text-center"><div className="text-4xl mb-4">📈</div><p className="text-[#333] text-sm">Loading…</p></div>
+      <div className="text-center"><div className="text-4xl mb-4">📈</div><p className="text-[#777] text-sm">Loading…</p></div>
     </div>
   );
 
